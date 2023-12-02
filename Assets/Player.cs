@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     private int jumpMax = 2;
     private int jumpCount;
     private bool isGrounded;
+    private bool isWallDetected;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
 
     private Animator anim;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
 
     private void AnimController()
     {
+      
         anim.SetFloat("xInput", rb.velocity.x);
         anim.SetFloat("yInput", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
@@ -104,6 +107,11 @@ public class Player : MonoBehaviour
                                         Vector2.down,           // to Vector draw to down
                                         groundCheckDistance,    // Vector length by float
                                         whatIsGround);          // Layer of Ground set in Unity layer
+        //Wall check line (position, Vector.right, Vector lenght, Layer)
+        isWallDetected = Physics2D.Raycast(transform.position, 
+                                        Vector2.right, 
+                                        wallCheckDistance, 
+                                        whatIsGround);
     }
 
     private void OnDrawGizmos()
@@ -113,5 +121,10 @@ public class Player : MonoBehaviour
                         new Vector2(transform.position.x,       // position B (x, y to vector Length can input)
                                     transform.position.y - 
                                     groundCheckDistance));
+        
+        // DrawLine (position A from, to position B)
+        Gizmos.DrawLine(new Vector2(transform.position.x + wallCheckDistance ,transform.position.y), transform.position);
+
+
     }
 }
