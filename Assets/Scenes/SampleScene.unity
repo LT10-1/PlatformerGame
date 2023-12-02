@@ -354,7 +354,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 15
   groundCheckDistance: 1.18
-  wallCheckDistance: 0.87
+  wallCheckDistance: 0.7
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

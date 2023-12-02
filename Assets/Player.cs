@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
     [Header("Wall Slide")]
     private bool isWallDetected;
     private bool isWallSliding;
-    
     [SerializeField] private float wallSlidingSpeed;
-    
+
+
 
     private Animator anim;
 
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         jumpCount = jumpMax;
-        
+
     }
 
 
@@ -45,8 +45,8 @@ public class Player : MonoBehaviour
         DoubleJump();               // Jumpcount > 0 and isGround
         AnimController();           // Animation setup
         FlipController();           // Facing = Rotate transform
-        WallSliding();
-        
+        WallSliding();              // Walldetected = true and velocity.y < 0 then WallSlide
+
 
 
     }
@@ -55,20 +55,19 @@ public class Player : MonoBehaviour
     {
         if (isWallDetected && rb.velocity.y < 0)
         {
-            
+
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * wallSlidingSpeed);
-            if (isWallSliding)
-                anim.SetBool("isSliding", true);
-       
+            
+                
+
         }
         if (!isWallDetected)
         {
-            
+
             isWallSliding = false;
+
             
-            if (!isWallSliding)
-                anim.SetBool("isSliding", false);
         }
     }
 
@@ -76,10 +75,11 @@ public class Player : MonoBehaviour
     {
 
         anim.SetFloat("xInput", rb.velocity.x);
-        
+
         anim.SetFloat("yInput", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
-        
+        anim.SetBool("isSliding", isWallSliding);
+
     }
 
     private void DoubleJump()
@@ -106,10 +106,10 @@ public class Player : MonoBehaviour
     {
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetButtonDown("Jump");
-        
-        if(Input.GetAxis("Vertical") < 0)
+
+        if (Input.GetAxis("Vertical") < 0)
         {
-            
+
             isWallDetected = false;
         }
     }
@@ -152,11 +152,11 @@ public class Player : MonoBehaviour
                                         groundCheckDistance,    // Vector length by float
                                         whatIsGround);          // Layer of Ground set in Unity layer
         //Wall check line (position, Vector.right, Vector lenght, Layer)
-        isWallDetected = Physics2D.Raycast(transform.position, 
-                                        Vector2.right, 
-                                        wallCheckDistance, 
+        isWallDetected = Physics2D.Raycast(transform.position,
+                                        Vector2.right,
+                                        wallCheckDistance,
                                         whatIsGround);
-        
+
     }
 
     private void OnDrawGizmos()
@@ -164,11 +164,11 @@ public class Player : MonoBehaviour
         // DrawLine (position A from, to position B)
         Gizmos.DrawLine(transform.position,                     // position A
                         new Vector2(transform.position.x,       // position B (x, y to vector Length can input)
-                                    transform.position.y - 
+                                    transform.position.y -
                                     groundCheckDistance));
-        
+
         // DrawLine (position A from, to position B)
-        Gizmos.DrawLine(new Vector2(transform.position.x + wallCheckDistance ,transform.position.y), transform.position);
+        Gizmos.DrawLine(new Vector2(transform.position.x + wallCheckDistance, transform.position.y), transform.position);
 
 
     }
