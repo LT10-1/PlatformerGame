@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
+
     [Header("Move Basic Info")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
@@ -11,10 +12,16 @@ public class Player : MonoBehaviour
     private int jumpMax = 2;
     private int jumpCount;
     private bool isGrounded;
-    private bool isWallDetected;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
+
+    [Header("Wall Slide")]
+    private bool isWallDetected;
+    private bool isWallSliding;
+    
+    [SerializeField] private float wallSlidingSpeed;
+    
 
     private Animator anim;
 
@@ -25,7 +32,8 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        jumpCount = jumpMax; 
+        jumpCount = jumpMax;
+        
     }
 
 
@@ -37,17 +45,41 @@ public class Player : MonoBehaviour
         DoubleJump();               // Jumpcount > 0 and isGround
         AnimController();           // Animation setup
         FlipController();           // Facing = Rotate transform
-
+        WallSliding();
         
 
+
+    }
+
+    private void WallSliding()
+    {
+        if (isWallDetected && rb.velocity.y < 0)
+        {
+            
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * wallSlidingSpeed);
+            if (isWallSliding)
+                anim.SetBool("isSliding", true);
+       
+        }
+        if (!isWallDetected)
+        {
+            
+            isWallSliding = false;
+            
+            if (!isWallSliding)
+                anim.SetBool("isSliding", false);
+        }
     }
 
     private void AnimController()
     {
-      
+
         anim.SetFloat("xInput", rb.velocity.x);
+        
         anim.SetFloat("yInput", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
+        
     }
 
     private void DoubleJump()
@@ -62,12 +94,24 @@ public class Player : MonoBehaviour
             Jump();
             jumpCount -= 1;
         }
+        /*if (isWallDetected)
+        {
+            jumpCount++;
+        }*/
+
+
     }
 
     private void InputCheck()
     {
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetButtonDown("Jump");
+        
+        if(Input.GetAxis("Vertical") < 0)
+        {
+            
+            isWallDetected = false;
+        }
     }
 
     private void Move()
@@ -112,6 +156,7 @@ public class Player : MonoBehaviour
                                         Vector2.right, 
                                         wallCheckDistance, 
                                         whatIsGround);
+        
     }
 
     private void OnDrawGizmos()
