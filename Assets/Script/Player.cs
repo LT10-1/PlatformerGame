@@ -1,12 +1,11 @@
 ﻿using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    [Header("Move Basic Info")]
+    [Header("Move Basic")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
     private float xInput;
@@ -15,37 +14,48 @@ public class Player : MonoBehaviour
     private int jumpCount;
     private bool isFacingRight = true;
     private bool canMove;
+
     private int facingDir = 1;
 
-    [Header("Check Collision")]
-    public Transform wallCheck;
-    public Transform groundCheck;
-    [SerializeField] private Vector2 wallCheckSize;
-    [SerializeField] private Vector2 groundCheckSize;
-    private bool isWallDetected;
-    private bool isGrounded;
-    [SerializeField] private LayerMask whatIsGround;
-
-
     [Header("Wall Slide")]
-    private bool isWallSliding;
     [SerializeField] private float wallSlidingSpeed;
+    private bool isWallSliding;
 
     [Header("Wall Jump")]
-    private bool isWallJump;
     [SerializeField] private Vector2 wallJumpDirection;
+    private bool isWallJump;
 
-    [Header("PlayerHit Info")]
-    private bool isHit;
-    private bool canHit = true;
+    [Header("Check Collision")]
+    [SerializeField] private Vector2 wallCheckSize;
+    [SerializeField] private Vector2 groundCheckSize;
+    [SerializeField] private LayerMask whatIsGround;
+    public Transform wallCheck;
+    public Transform groundCheck;
+    private bool isWallDetected;
+    private bool isGrounded;
+
+
+
+    [Header("PlayerHit")]
     [SerializeField] private Vector2 HitDirection;
     [SerializeField] private float HitTime;
-     private float HitTimeCounter;
     [SerializeField] private float CooldownTimePlayerHit;
+    private bool isHit;
+    private bool canHit = true;
+    private float HitTimeCounter;
+
+    [Header("PlayerRoll")]
+    [SerializeField] private float speedRoll;
+    [SerializeField] private Vector2 RollingDir;
+    private bool isRoll;
+    private bool RollButton;
+    private bool canRoll = true;
+    [SerializeField] private float RollTimeCounter;
+    [SerializeField] private float RollTimeCooldown;
+    [SerializeField] private float TimeRoll;
+
 
     private Animator anim;
-
-
 
     void Start()
     {
@@ -59,17 +69,16 @@ public class Player : MonoBehaviour
     void Update()
     {
         HitTimeCounter -= Time.deltaTime;
+        RollTimeCounter -= Time.deltaTime;
 
         CollisionChecks();
         AnimController();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            
-            PlayerHit();
-
-        }
-        if(isHit)
+        if (isHit)
+            return;
+        if (RollButton && RollTimeCounter < 0 && isGrounded)
+            PlayerRolling();
+        if (isRoll)
             return;
 
         InputCheck();
@@ -79,6 +88,7 @@ public class Player : MonoBehaviour
 
         if (isWallDetected)
         {
+            canRoll = false;
             WallSliding();
             if (yInput && isWallSliding)
             {
@@ -98,11 +108,27 @@ public class Player : MonoBehaviour
         if (isGrounded)
         {
 
+            canRoll = true;
             canMove = true;
             isWallJump = false; // Đặt isWallJump thành false khi chạm đất
         }
-
     }
+
+    private void PlayerRolling()
+    {
+        isRoll = true;
+
+        if (isRoll)
+        {
+            rb.velocity = new Vector2(RollingDir.x * facingDir, RollingDir.y);
+            RollTimeCounter = RollTimeCooldown;
+
+        }
+
+        Invoke("CancelPlayerRoll", TimeRoll);
+    }
+
+    void CancelPlayerRoll() => isRoll = false;
 
     private IEnumerator EnableMovementAfterDelay()
     {
@@ -111,9 +137,11 @@ public class Player : MonoBehaviour
         isWallJump = false; // Đặt isWallJump thành false sau khi rời khỏi tường
     }
 
+
+
     public void PlayerHit()
     {
-        if(canHit && HitTimeCounter < 0)
+        if (canHit && HitTimeCounter < 0)
         {
             isHit = true;
             HitTimeCounter = CooldownTimePlayerHit;
@@ -121,17 +149,19 @@ public class Player : MonoBehaviour
             Invoke("CancelPlayerHit", HitTime);
 
         }
-            
-       
+
+
     }
 
     void CancelPlayerHit() => isHit = false;
-    
+
 
     private void WallSliding()
     {
         if (isWallDetected && rb.velocity.y < 0)
         {
+            isRoll = false;
+            canRoll = false;
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlidingSpeed));
         }
@@ -150,7 +180,6 @@ public class Player : MonoBehaviour
             canMove = false;
             isWallJump = true;
             jumpCount = jumpMax;
-
 
         }
 
@@ -176,7 +205,7 @@ public class Player : MonoBehaviour
     {
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetButtonDown("Jump");
-
+        RollButton = Input.GetButtonDown("Fire3");
         if (Input.GetAxis("Vertical") < 0)
             isWallDetected = false;
 
@@ -193,20 +222,30 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+
         if (isWallSliding)
         {
+            
+           
             WallJumping();
         }
         else if (isGrounded && yInput)
         {
+            
+            
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
         }
         else if (!isGrounded && yInput && jumpCount > 0)
         {
+            
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpCount--; // Giảm jumpCount mỗi khi nhảy trong không trung
         }
+
+
+
+
     }
 
 
@@ -234,6 +273,7 @@ public class Player : MonoBehaviour
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isSliding", isWallSliding);
         anim.SetBool("isHit", isHit);
+        anim.SetBool("isRoll", isRoll);
     }
     private void CollisionChecks()
     {
