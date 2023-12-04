@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         CollisionChecks();
         AnimController();
 
-        if (Input.GetKeyDown(KeyCode.K) && HitTimeCounter <0 )
+        if (Input.GetKeyDown(KeyCode.K))
         {
             
             PlayerHit();
@@ -113,12 +113,14 @@ public class Player : MonoBehaviour
 
     public void PlayerHit()
     {
-        
-
+        if(canHit && HitTimeCounter < 0)
+        {
             isHit = true;
             HitTimeCounter = CooldownTimePlayerHit;
             rb.velocity = new Vector2(HitDirection.x * -facingDir, HitDirection.y);
             Invoke("CancelPlayerHit", HitTime);
+
+        }
             
        
     }
