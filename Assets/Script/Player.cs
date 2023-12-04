@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     [Header("PlayerRoll")]
     [SerializeField] private float speedRoll;
     [SerializeField] private Vector2 RollingDir;
-    private bool isRoll;
+    public bool isRoll;
     private bool RollButton;
     private bool canRoll = true;
     [SerializeField] private float RollTimeCounter;

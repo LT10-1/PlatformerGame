@@ -602,6 +602,7 @@ MonoBehaviour:
   CooldownTimePlayerHit: 0.5
   speedRoll: 5
   RollingDir: {x: 15, y: 0}
+  isRoll: 0
   RollTimeCounter: 0
   RollTimeCooldown: 2
   TimeRoll: 0.3
