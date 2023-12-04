@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -15,16 +14,16 @@ public class Player : MonoBehaviour
     private int jumpCount;
     private bool isFacingRight = true;
     private bool canMove;
-    private int facingDir =1;
+    private int facingDir = 1;
 
     [Header("Check Collision")]
     public Transform wallCheck;
     public Transform groundCheck;
-    private bool isGrounded;
+    [SerializeField] private Vector2 wallCheckSize;
+    [SerializeField] private Vector2 groundCheckSize;
     private bool isWallDetected;
+    private bool isGrounded;
     [SerializeField] private LayerMask whatIsGround;
-    public BoxCollider2D groundCheckCollider; 
-    public BoxCollider2D wallCheckCollider;   
 
 
     [Header("Wall Slide")]
@@ -109,7 +108,7 @@ public class Player : MonoBehaviour
     {
         if (isWallSliding)
         {
-            
+
             rb.velocity = new Vector2(wallJumpDirection.x * -facingDir, wallJumpDirection.y);
             canMove = false;
             isWallJump = true;
@@ -117,10 +116,10 @@ public class Player : MonoBehaviour
 
 
         }
-        
+
     }
 
-   
+
 
     private void DoubleJump()
     {
@@ -148,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        if(canMove)
+        if (canMove)
         {
             rb.velocity = new Vector2(xInput * moveSpeed, rb.velocity.y);
 
@@ -164,7 +163,7 @@ public class Player : MonoBehaviour
         else if (isGrounded && yInput)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            
+
         }
         else if (!isGrounded && yInput && jumpCount > 0)
         {
@@ -201,15 +200,19 @@ public class Player : MonoBehaviour
     }
     private void CollisionChecks()
     {
-        Vector2 groundCheckSize = groundCheckCollider.size;
-        Vector2 wallCheckSize = wallCheckCollider.size;
+
         //Ground check box
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, whatIsGround);
+        isGrounded = Physics2D.BoxCast(groundCheck.position, groundCheckSize, 0, Vector2.zero, whatIsGround);
+        
 
         //Wall check box
-        isWallDetected = Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0, whatIsGround);
-        
+        isWallDetected = Physics2D.BoxCast(wallCheck.position, wallCheckSize, 0, Vector2.zero, whatIsGround);
+
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+        Gizmos.DrawWireCube(wallCheck.position, wallCheckSize);
+    }
 }
