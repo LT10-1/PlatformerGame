@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -34,6 +35,13 @@ public class Player : MonoBehaviour
     private bool isWallJump;
     [SerializeField] private Vector2 wallJumpDirection;
 
+    [Header("PlayerHit Info")]
+    private bool isHit;
+    private bool canHit = true;
+    [SerializeField] private Vector2 HitDirection;
+    [SerializeField] private float HitTime;
+    [SerializeField] private float HitTimeCounter;
+    [SerializeField] private float CooldownTimePlayerHit;
 
     private Animator anim;
 
@@ -50,11 +58,23 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        HitTimeCounter -= Time.deltaTime;
+
         CollisionChecks();
+        AnimController();
+
+        if (Input.GetKeyDown(KeyCode.K) && HitTimeCounter <0 )
+        {
+            
+            PlayerHit();
+
+        }
+        if(isHit)
+            return;
+
         InputCheck();
         Move();
         DoubleJump();
-        AnimController();
         FlipController();
 
         if (isWallDetected)
@@ -90,6 +110,21 @@ public class Player : MonoBehaviour
         canMove = true;
         isWallJump = false; // Đặt isWallJump thành false sau khi rời khỏi tường
     }
+
+    public void PlayerHit()
+    {
+        
+
+            isHit = true;
+            HitTimeCounter = CooldownTimePlayerHit;
+            rb.velocity = new Vector2(HitDirection.x * -facingDir, HitDirection.y);
+            Invoke("CancelPlayerHit", HitTime);
+            
+       
+    }
+
+    void CancelPlayerHit() => isHit = false;
+    
 
     private void WallSliding()
     {
@@ -196,14 +231,14 @@ public class Player : MonoBehaviour
         anim.SetFloat("yInput", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isSliding", isWallSliding);
-
+        anim.SetBool("isHit", isHit);
     }
     private void CollisionChecks()
     {
 
         //Ground check box
         isGrounded = Physics2D.BoxCast(groundCheck.position, groundCheckSize, 0, Vector2.zero, whatIsGround);
-        
+
 
         //Wall check box
         isWallDetected = Physics2D.BoxCast(wallCheck.position, wallCheckSize, 0, Vector2.zero, whatIsGround);
