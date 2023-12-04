@@ -488,7 +488,6 @@ MonoBehaviour:
   wallJumpDirection: {x: 20, y: 12}
   HitDirection: {x: 5, y: 12}
   HitTime: 0.5
-  HitTimeCounter: 0
   CooldownTimePlayerHit: 1
 --- !u!50 &1048395487
 Rigidbody2D:

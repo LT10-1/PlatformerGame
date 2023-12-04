@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     private bool canHit = true;
     [SerializeField] private Vector2 HitDirection;
     [SerializeField] private float HitTime;
-    [SerializeField] private float HitTimeCounter;
+     private float HitTimeCounter;
     [SerializeField] private float CooldownTimePlayerHit;
 
     private Animator anim;
