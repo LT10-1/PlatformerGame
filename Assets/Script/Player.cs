@@ -164,7 +164,10 @@ public class Player : MonoBehaviour
             canRoll = false;
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlidingSpeed));
+
+            jumpCount = jumpMax;
         }
+
         else
         {
             isWallSliding = false;
@@ -179,9 +182,9 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(wallJumpDirection.x * -facingDir, wallJumpDirection.y);
             canMove = false;
             isWallJump = true;
-            jumpCount = jumpMax;
 
         }
+
 
     }
 
@@ -225,29 +228,23 @@ public class Player : MonoBehaviour
 
         if (isWallSliding)
         {
-            
-           
             WallJumping();
         }
         else if (isGrounded && yInput)
         {
-            
-            
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-
+            JumpVelocity();
         }
         else if (!isGrounded && yInput && jumpCount > 0)
         {
-            
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpCount--; // Giảm jumpCount mỗi khi nhảy trong không trung
+            JumpVelocity();
         }
-
-
-
 
     }
 
+    private void JumpVelocity()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
 
     private void FlipController()
     {
