@@ -14,8 +14,8 @@ public class Player : MonoBehaviour
     private int jumpCount;
     private bool isFacingRight = true;
     private bool canMove;
-
     private int facingDir = 1;
+
 
     [Header("Wall Slide")]
     [SerializeField] private float wallSlidingSpeed;
@@ -45,14 +45,14 @@ public class Player : MonoBehaviour
     private float HitTimeCounter;
 
     [Header("PlayerRoll")]
-    [SerializeField] private float speedRoll;
     [SerializeField] private Vector2 RollingDir;
     public bool isRoll;
     private bool RollButton;
     private bool canRoll = true;
     [SerializeField] private float RollTimeCounter;
     [SerializeField] private float RollTimeCooldown;
-    [SerializeField] private float TimeRoll;
+
+
 
 
     private Animator anim;
@@ -73,11 +73,10 @@ public class Player : MonoBehaviour
 
         CollisionChecks();
         AnimController();
-
+        PlayerRolling();
         if (isHit)
             return;
-        if (RollButton && RollTimeCounter < 0 && isGrounded)
-            PlayerRolling();
+        
         if (isRoll)
             return;
 
@@ -86,46 +85,20 @@ public class Player : MonoBehaviour
         DoubleJump();
         FlipController();
 
-        if (isWallDetected)
-        {
-            canRoll = false;
-            WallSliding();
-            if (yInput && isWallSliding)
-            {
-                WallJumping();
-            }
-        }
-        else
-        {
-            isWallSliding = false;
-            if (isWallJump)
-            {
-                // Cho phép một khoảng thời gian ngắn để nhân vật di chuyển sau wall jump
-                StartCoroutine(EnableMovementAfterDelay());
-            }
-        }
 
-        if (isGrounded)
-        {
-
-            canRoll = true;
-            canMove = true;
-            isWallJump = false; // Đặt isWallJump thành false khi chạm đất
-        }
     }
 
     private void PlayerRolling()
     {
-        isRoll = true;
-
-        if (isRoll)
+        if (RollButton && RollTimeCounter < 0 && isGrounded)
         {
+            isRoll = true;
             rb.velocity = new Vector2(RollingDir.x * facingDir, RollingDir.y);
             RollTimeCounter = RollTimeCooldown;
 
         }
+            
 
-        Invoke("CancelPlayerRoll", TimeRoll);
     }
 
     void CancelPlayerRoll() => isRoll = false;
@@ -281,6 +254,33 @@ public class Player : MonoBehaviour
 
         //Wall check box
         isWallDetected = Physics2D.BoxCast(wallCheck.position, wallCheckSize, 0, Vector2.zero, whatIsGround);
+
+        if (isWallDetected)
+        {
+            canRoll = false;
+            WallSliding();
+            if (yInput && isWallSliding)
+            {
+                WallJumping();
+            }
+        }
+        else
+        {
+            isWallSliding = false;
+            if (isWallJump)
+            {
+                // Cho phép một khoảng thời gian ngắn để nhân vật di chuyển sau wall jump
+                StartCoroutine(EnableMovementAfterDelay());
+            }
+        }
+
+        if (isGrounded)
+        {
+
+            canRoll = true;
+            canMove = true;
+            isWallJump = false; // Đặt isWallJump thành false khi chạm đất
+        }
 
     }
 
