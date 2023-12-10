@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     private bool isFacingRight = true;
     private bool canMove;
     private int facingDir = 1;
+    [SerializeField] private float bufferJumpTime;
+    [SerializeField] private float bufferJumpCounter;
+ 
+   
 
 
     [Header("Wall Slide")]
@@ -70,13 +74,15 @@ public class Player : MonoBehaviour
     {
         HitTimeCounter -= Time.deltaTime;
         RollTimeCounter -= Time.deltaTime;
+        bufferJumpCounter -= Time.deltaTime;
+   
 
         CollisionChecks();
         AnimController();
         PlayerRolling();
         if (isHit)
             return;
-        
+
         if (isRoll)
             return;
 
@@ -97,7 +103,7 @@ public class Player : MonoBehaviour
             RollTimeCounter = RollTimeCooldown;
 
         }
-            
+
 
     }
 
@@ -198,6 +204,10 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+        if (!isGrounded)
+        {
+            bufferJumpCounter = bufferJumpTime;
+        }
 
         if (isWallSliding)
         {
@@ -205,16 +215,16 @@ public class Player : MonoBehaviour
         }
         else if (isGrounded && yInput)
         {
-            JumpVelocity();
+            JumpButton();
         }
         else if (!isGrounded && yInput && jumpCount > 0)
         {
-            JumpVelocity();
+            JumpButton();
         }
 
     }
 
-    private void JumpVelocity()
+    private void JumpButton()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
@@ -280,7 +290,14 @@ public class Player : MonoBehaviour
             canRoll = true;
             canMove = true;
             isWallJump = false; // Đặt isWallJump thành false khi chạm đất
+
+            if (bufferJumpCounter > 0)
+            {
+                bufferJumpCounter = -1;
+                Jump();
+            }
         }
+
 
     }
 
