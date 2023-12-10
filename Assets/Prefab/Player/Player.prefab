@@ -236,7 +236,7 @@ MonoBehaviour:
   jumpForce: 15
   wallSlidingSpeed: 0.5
   wallJumpDirection: {x: 20, y: 12}
-  wallCheckSize: {x: 0.08, y: 1.28}
+  wallCheckSize: {x: 0.08, y: 0.91}
   groundCheckSize: {x: 1.07, y: 0.1}
   whatIsGround:
     serializedVersion: 2
@@ -245,10 +245,8 @@ MonoBehaviour:
   groundCheck: {fileID: 7247924319977149964}
   HitDirection: {x: 5, y: 12}
   HitTime: 0.5
-  CooldownTimePlayerHit: 0.5
-  speedRoll: 5
+  CooldownTimePlayerHit: 1
   RollingDir: {x: 15, y: 0}
   isRoll: 0
   RollTimeCounter: 0
   RollTimeCooldown: 2
-  TimeRoll: 0.3

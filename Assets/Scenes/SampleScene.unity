@@ -817,13 +817,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7247924321602679591, guid: 25452de0385a29b40be82b1e0033bc72, type: 3}
-      propertyPath: HitTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7247924321602679591, guid: 25452de0385a29b40be82b1e0033bc72, type: 3}
-      propertyPath: CooldownTimePlayerHit
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25452de0385a29b40be82b1e0033bc72, type: 3}
