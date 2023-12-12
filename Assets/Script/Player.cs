@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private int facingDir = 1;
     [SerializeField] private float bufferJumpTime;
     [SerializeField] private float bufferJumpCounter;
- 
-   
+
+
 
 
     [Header("Wall Slide")]
@@ -30,9 +30,12 @@ public class Player : MonoBehaviour
     private bool isWallJump;
 
     [Header("Check Collision")]
-    [SerializeField] private Vector2 wallCheckSize;
+    
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Transform enemyCheck;
+    [SerializeField] private float enemyCheckRadius;
+    [SerializeField] private float wallCheckDistance;
     public Transform wallCheck;
     public Transform groundCheck;
     private bool isWallDetected;
@@ -75,7 +78,7 @@ public class Player : MonoBehaviour
         HitTimeCounter -= Time.deltaTime;
         RollTimeCounter -= Time.deltaTime;
         bufferJumpCounter -= Time.deltaTime;
-   
+
 
         CollisionChecks();
         AnimController();
@@ -90,8 +93,26 @@ public class Player : MonoBehaviour
         Move();
         DoubleJump();
         FlipController();
+        CheckForEnemy();
 
+    }
 
+    private void CheckForEnemy()
+    {
+        Collider2D[] hitedCollider = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius);
+
+        foreach (var enemy in hitedCollider)
+        {
+            if (enemy.GetComponent<Enemy>() != null)
+            {
+                if (rb.velocity.y < 0)
+                {
+                    enemy.GetComponent<Enemy>().Damage();
+                    JumpButton();
+
+                }
+            }
+        }
     }
 
     private void PlayerRolling()
@@ -263,7 +284,7 @@ public class Player : MonoBehaviour
 
 
         //Wall check box
-        isWallDetected = Physics2D.BoxCast(wallCheck.position, wallCheckSize, 0, Vector2.zero, whatIsGround);
+        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
 
         if (isWallDetected)
         {
@@ -304,6 +325,8 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
-        Gizmos.DrawWireCube(wallCheck.position, wallCheckSize);
+        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
+       
+        Gizmos.DrawWireSphere(enemyCheck.position, enemyCheckRadius);
     }
 }
