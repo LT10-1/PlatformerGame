@@ -567,7 +567,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemyRenderer: {fileID: 1133898116}
-  waitTimeAfterDetection: 3
+  waitTimeAfterDetection: 1.5
+  detectionTimeCounter: 0
 --- !u!95 &1133898113
 Animator:
   serializedVersion: 5

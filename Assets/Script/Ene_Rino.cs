@@ -20,7 +20,7 @@ public class Ene_Rino : Enemy
     [Header("Visuals")]
     [SerializeField] private SpriteRenderer enemyRenderer;
 
-    [SerializeField] private float waitTimeAfterDetection = 3f; // Thời gian đợi sau khi phát hiện người chơi
+    [SerializeField] private float waitTimeAfterDetection = 1.5f; // Thời gian đợi sau khi phát hiện người chơi
     [SerializeField] private float detectionTimeCounter; // Bộ đếm thời gian sau khi phát hiện
 
 
@@ -29,7 +29,7 @@ public class Ene_Rino : Enemy
         base.Start();
         invincible = true;
         detectionTimeCounter = waitTimeAfterDetection; // Khởi tạo bộ đếm thời gian
-        
+
     }
 
 
@@ -37,36 +37,39 @@ public class Ene_Rino : Enemy
     {
         playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
 
+        if (!playerDetection)
+            detectionTimeCounter = waitTimeAfterDetection;
+
         // Kiểm tra nếu người chơi đã được phát hiện và enemy chưa ở trong chế độ tức giận
         if (playerDetection && !angryMode)
         {
-            // Nếu thời gian phát hiện còn lại lớn hơn 0, tiếp tục đếm ngược
-            if (detectionTimeCounter > 0)
+
+            detectionTimeCounter -= Time.deltaTime; // Giảm thời gian phát hiện dựa trên thời gian thực
+
+
+            rb.velocity = new Vector2(0, 0); // Dừng enemy lại
+
+
+
+            enemyRenderer.color = Color.red; // Thay đổi màu của enemy thành màu đỏ để biểu thị rằng nó đang trong trạng thái cảnh giác
+
+            if (detectionTimeCounter < 0) // nếu thời gian phát hiện đã hết
             {
-                // Giảm thời gian phát hiện dựa trên thời gian thực
-                detectionTimeCounter -= Time.deltaTime;
 
-                
-                rb.velocity = new Vector2(0, 0); // Dừng enemy lại
+                angryMode = true; // Kích hoạt chế độ tức giận, cho phép enemy bắt đầu đuổi theo người chơi
 
-                // Thay đổi màu của enemy thành màu đỏ để biểu thị rằng nó đang trong trạng thái cảnh giác
-                enemyRenderer.color = Color.red;
-            }
-            else // Ngược lại, nếu thời gian phát hiện đã hết
-            {
-                // Kích hoạt chế độ tức giận, cho phép enemy bắt đầu đuổi theo người chơi
-                angryMode = true;
 
-                // Đặt lại thời gian chờ sau khi phát hiện để sử dụng cho lần tiếp theo
-                detectionTimeCounter = waitTimeAfterDetection;
+                detectionTimeCounter = waitTimeAfterDetection; // Đặt lại thời gian chờ sau khi phát hiện để sử dụng cho lần tiếp theo
 
-                // Đặt lại màu của enemy về màu ban đầu
-                enemyRenderer.color = Color.white;
+
+                enemyRenderer.color = Color.white;  // Đặt lại màu của enemy về màu ban đầu
             }
         }
 
+
         else if (!angryMode)
         {
+
             enemyRenderer.color = Color.white;
             if (idleTimeCounter <= 0)
                 rb.velocity = new Vector2(speed * facingDir, rb.velocity.y);
@@ -112,7 +115,7 @@ public class Ene_Rino : Enemy
 
     }
 
-    
+
 
     private void AnimatorController()
     {
