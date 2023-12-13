@@ -17,11 +17,18 @@ public class Ene_Rino : Enemy
     private RaycastHit2D playerDetection;
     private bool angryMode;
 
+    [Header("Visuals")]
+    [SerializeField] private SpriteRenderer enemyRenderer;
+
+    [SerializeField] private float waitTimeAfterDetection = 3f; // Thời gian đợi sau khi phát hiện người chơi
+    private float detectionTimeCounter; // Bộ đếm thời gian sau khi phát hiện
 
     protected override void Start()
     {
         base.Start();
         invincible = true;
+        detectionTimeCounter = waitTimeAfterDetection; // Khởi tạo bộ đếm thời gian
+        
     }
 
 
@@ -29,16 +36,26 @@ public class Ene_Rino : Enemy
     {
         playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
 
-        if (playerDetection)
+        if (playerDetection && !angryMode)
         {
-
-            angryMode = true;
-
+            // Bắt đầu đếm ngược thời gian đợi khi phát hiện người chơi
+            if (detectionTimeCounter > 0)
+            {
+                detectionTimeCounter -= Time.deltaTime;
+                Holding(); // Gọi phương thức để enemy dừng lại
+                enemyRenderer.color = Color.red; // Đặt màu của enemy thành màu đỏ
+            }
+            else
+            {
+                angryMode = true; // Chuyển sang angryMode sau khi thời gian đợi kết thúc
+                detectionTimeCounter = waitTimeAfterDetection; // Đặt lại bộ đếm thời gian cho lần phát hiện tiếp theo
+                enemyRenderer.color = Color.white; // Đặt lại màu của enemy thành màu gốc khi bắt đầu đuổi theo
+            }
         }
 
-        if (!angryMode)
+        else if (!angryMode)
         {
-
+            enemyRenderer.color = Color.white;
             if (idleTimeCounter <= 0)
                 rb.velocity = new Vector2(speed * facingDir, rb.velocity.y);
             else
@@ -52,7 +69,7 @@ public class Ene_Rino : Enemy
                 Flip();
             }
         }
-        else
+        else //angrymode = true
         {
             rb.velocity = new Vector2(speedAngry * facingDir, rb.velocity.y);
 
@@ -81,6 +98,11 @@ public class Ene_Rino : Enemy
         CollisionCheck();
         AnimatorController();
 
+    }
+
+    private void Holding()
+    {
+        rb.velocity = new Vector2(0, 0); // Dừng enemy lại
     }
 
     private void AnimatorController()

@@ -182,7 +182,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -562,10 +562,12 @@ MonoBehaviour:
   speedAngry: 8
   idleTime: 1
   idleTimeCounter: 0
-  shockTime: 4
+  shockTime: 2
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  enemyRenderer: {fileID: 1133898116}
+  waitTimeAfterDetection: 3
 --- !u!95 &1133898113
 Animator:
   serializedVersion: 5
@@ -1254,11 +1256,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130542042338605074, guid: eb16bb916c1bb9347bb1ff32225329c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.78
+      value: 10.26
       objectReference: {fileID: 0}
     - target: {fileID: 2130542042338605074, guid: eb16bb916c1bb9347bb1ff32225329c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.59
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2130542042338605074, guid: eb16bb916c1bb9347bb1ff32225329c7, type: 3}
       propertyPath: m_LocalPosition.z
