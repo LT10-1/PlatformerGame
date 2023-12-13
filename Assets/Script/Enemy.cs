@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     protected bool wallDetected;
     protected bool groundDetected;
 
-    public bool invincible = false;
+    public bool invincible;
 
     protected virtual void Start()
     {

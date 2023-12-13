@@ -477,11 +477,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 938376304210817590, guid: 3e6c0be5e92dba446b95801b4e369a76, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.987718
+      value: 11.23
       objectReference: {fileID: 0}
     - target: {fileID: 938376304210817590, guid: 3e6c0be5e92dba446b95801b4e369a76, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.1963706
+      value: 1.86
       objectReference: {fileID: 0}
     - target: {fileID: 938376304210817590, guid: 3e6c0be5e92dba446b95801b4e369a76, type: 3}
       propertyPath: m_LocalPosition.z
@@ -563,9 +563,9 @@ MonoBehaviour:
   idleTime: 1
   idleTimeCounter: 0
   shockTime: 4
-  whatToIgnore:
+  whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 256
 --- !u!95 &1133898113
 Animator:
   serializedVersion: 5
@@ -1254,11 +1254,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130542042338605074, guid: eb16bb916c1bb9347bb1ff32225329c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.11
+      value: 6.78
       objectReference: {fileID: 0}
     - target: {fileID: 2130542042338605074, guid: eb16bb916c1bb9347bb1ff32225329c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.62
+      value: -1.59
       objectReference: {fileID: 0}
     - target: {fileID: 2130542042338605074, guid: eb16bb916c1bb9347bb1ff32225329c7, type: 3}
       propertyPath: m_LocalPosition.z

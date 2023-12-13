@@ -13,7 +13,7 @@ public class Ene_Rino : Enemy
     private float shockTimeCounter;
 
 
-    [SerializeField] private LayerMask whatToIgnore;
+    [SerializeField] private LayerMask whatIsPlayer;
     private RaycastHit2D playerDetection;
     private bool angryMode;
 
@@ -27,9 +27,9 @@ public class Ene_Rino : Enemy
 
     void Update()
     {
-        playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, ~whatToIgnore);
+        playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
 
-        if (playerDetection.collider.GetComponent<Player>() != null)
+        if (playerDetection)
         {
 
             angryMode = true;
