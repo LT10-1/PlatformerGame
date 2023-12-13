@@ -21,7 +21,8 @@ public class Ene_Rino : Enemy
     [SerializeField] private SpriteRenderer enemyRenderer;
 
     [SerializeField] private float waitTimeAfterDetection = 3f; // Thời gian đợi sau khi phát hiện người chơi
-    private float detectionTimeCounter; // Bộ đếm thời gian sau khi phát hiện
+    [SerializeField] private float detectionTimeCounter; // Bộ đếm thời gian sau khi phát hiện
+
 
     protected override void Start()
     {
@@ -36,20 +37,31 @@ public class Ene_Rino : Enemy
     {
         playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
 
+        // Kiểm tra nếu người chơi đã được phát hiện và enemy chưa ở trong chế độ tức giận
         if (playerDetection && !angryMode)
         {
-            // Bắt đầu đếm ngược thời gian đợi khi phát hiện người chơi
+            // Nếu thời gian phát hiện còn lại lớn hơn 0, tiếp tục đếm ngược
             if (detectionTimeCounter > 0)
             {
+                // Giảm thời gian phát hiện dựa trên thời gian thực
                 detectionTimeCounter -= Time.deltaTime;
-                Holding(); // Gọi phương thức để enemy dừng lại
-                enemyRenderer.color = Color.red; // Đặt màu của enemy thành màu đỏ
+
+                
+                rb.velocity = new Vector2(0, 0); // Dừng enemy lại
+
+                // Thay đổi màu của enemy thành màu đỏ để biểu thị rằng nó đang trong trạng thái cảnh giác
+                enemyRenderer.color = Color.red;
             }
-            else
+            else // Ngược lại, nếu thời gian phát hiện đã hết
             {
-                angryMode = true; // Chuyển sang angryMode sau khi thời gian đợi kết thúc
-                detectionTimeCounter = waitTimeAfterDetection; // Đặt lại bộ đếm thời gian cho lần phát hiện tiếp theo
-                enemyRenderer.color = Color.white; // Đặt lại màu của enemy thành màu gốc khi bắt đầu đuổi theo
+                // Kích hoạt chế độ tức giận, cho phép enemy bắt đầu đuổi theo người chơi
+                angryMode = true;
+
+                // Đặt lại thời gian chờ sau khi phát hiện để sử dụng cho lần tiếp theo
+                detectionTimeCounter = waitTimeAfterDetection;
+
+                // Đặt lại màu của enemy về màu ban đầu
+                enemyRenderer.color = Color.white;
             }
         }
 
@@ -100,10 +112,7 @@ public class Ene_Rino : Enemy
 
     }
 
-    private void Holding()
-    {
-        rb.velocity = new Vector2(0, 0); // Dừng enemy lại
-    }
+    
 
     private void AnimatorController()
     {

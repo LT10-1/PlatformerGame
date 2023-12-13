@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
         {
             anim.SetTrigger("isHit");
             transform.localScale = new Vector2(1, 1);
-
+            rb.velocity = new Vector2(0, 0);
         }
         
    
@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
     public void DestroyMe()
     {
         Destroy(gameObject);
+        rb.velocity = new Vector2(0, 0);
     }
 
     protected virtual void OnTriggerStay2D(Collider2D collision)
