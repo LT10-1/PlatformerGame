@@ -17,39 +17,44 @@ public class Enemy : MonoBehaviour
     protected bool wallDetected;
     protected bool groundDetected;
 
+    public bool invincible = false;
+
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void Damage()
     {
-        Debug.Log("I Was Damaged!!!!");
-        Destroy(gameObject);
+        if (!invincible)
+        {
+            anim.SetTrigger("isHit");
+            transform.localScale = new Vector2(1, 1);
 
+        }
+        
+   
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void DestroyMe()
     {
-        if (collision.collider.GetComponent<Player>() != null)
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnTriggerStay2D(Collider2D collision)
+    {
+
+        Player playerCollider = collision.GetComponent<Player>();
+        if (playerCollider != null)
         {
-            Player playerCollider = collision.collider.GetComponent<Player>();
+            if (!playerCollider.isRoll)
+                playerCollider.PlayerHit();
 
-            if (playerCollider != null)
-            {
-                if (!playerCollider.isRoll)
-                    playerCollider.PlayerHit();
-
-            }
         }
     }
+
 
     protected virtual void Flip()
     {
