@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
 
     }
 
-    private void CheckForEnemy()
+    public void CheckForEnemy()
     {
         Collider2D[] hitedCollider = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius);
 

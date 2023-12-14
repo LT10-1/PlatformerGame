@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,6 +9,12 @@ public class Enemy : MonoBehaviour
 
     protected int facingDir = -1;
 
+    [Header("Move Info")]
+    [SerializeField] private float speed;
+    private float idleTime = 1;
+    private float idleTimeCounter;
+
+
     [SerializeField] protected LayerMask whatisGround;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected float wallCheckDistance;
@@ -17,7 +24,9 @@ public class Enemy : MonoBehaviour
     protected bool wallDetected;
     protected bool groundDetected;
 
-    public bool invincible;
+    [HideInInspector] public bool invincible = false;
+    [HideInInspector] public bool canMove = true;
+    
 
     protected virtual void Start()
     {
@@ -25,11 +34,27 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    protected virtual void WalkAround()
+    {
+        idleTimeCounter -= Time.deltaTime;
 
-    public void Damage()
+        if (idleTimeCounter <= 0 && canMove)
+            rb.velocity = new Vector2(speed * facingDir, rb.velocity.y);
+        else
+            rb.velocity = Vector2.zero;
+
+        if (wallDetected || !groundDetected)
+        {
+            idleTimeCounter = idleTime;
+            Flip();
+        }
+    }
+
+    public virtual void Damage()
     {
         if (!invincible)
         {
+            canMove = false;
             anim.SetTrigger("isHit");
             transform.localScale = new Vector2(1, 1);
             rb.velocity = new Vector2(0, 0);
@@ -40,6 +65,7 @@ public class Enemy : MonoBehaviour
 
     public void DestroyMe()
     {
+        canMove = false;
         Destroy(gameObject);
         rb.velocity = new Vector2(0, 0);
     }
@@ -72,6 +98,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
     }
