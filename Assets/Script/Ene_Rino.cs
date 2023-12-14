@@ -40,6 +40,13 @@ public class Ene_Rino : Enemy
         CollisionCheck();
         playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
 
+
+        if(canMove == true)
+            invincible = false;
+        if (angryMode == true)
+            invincible = true;
+
+
         if (!playerDetection)
         {
             detectionTimeCounter = waitTimeAfterDetection;
@@ -104,6 +111,7 @@ public class Ene_Rino : Enemy
             }
             if (hitWall)
             {
+                invincible = false;
                 rb.velocity = new Vector2(0, 0);
             }
 
@@ -113,7 +121,7 @@ public class Ene_Rino : Enemy
                 hitWall = false;
                 canMove = true;
                 
-                invincible = true;
+                invincible = false;
                 Flip();
                 
                 angryMode = false;
