@@ -241,8 +241,10 @@ MonoBehaviour:
   groundCheck: {fileID: 5828815073566444400}
   wallCheck: {fileID: 5828815072938215887}
   invincible: 0
+  canMove: 1
   speedAngry: 8
   shockTime: 2
+  shockTimeCounter: 0
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256

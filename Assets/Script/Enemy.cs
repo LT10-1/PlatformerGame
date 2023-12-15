@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
         idleTimeCounter -= Time.deltaTime;
 
         if (idleTimeCounter <= 0 && canMove)
-            rb.velocity = new Vector2(speed * facingDir, rb.velocity.y);
+            rb.velocity = new Vector2(speed * facingDir, 0f);
         else
             rb.velocity = Vector2.zero;
 
@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
     }
 
-    protected virtual void OnTriggerStay2D(Collider2D collision)
+    public virtual void OnTriggerStay2D(Collider2D collision)
     {
 
         Player playerCollider = collision.GetComponent<Player>();
@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
 
         }
     }
-
+    
 
     protected virtual void Flip()
     {

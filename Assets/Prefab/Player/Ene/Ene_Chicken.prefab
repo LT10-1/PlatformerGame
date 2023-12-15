@@ -179,6 +179,7 @@ MonoBehaviour:
   groundCheck: {fileID: 2130542043723134648}
   wallCheck: {fileID: 2130542042982827996}
   invincible: 0
+  canMove: 1
 --- !u!1 &2130542042982827971
 GameObject:
   m_ObjectHideFlags: 0

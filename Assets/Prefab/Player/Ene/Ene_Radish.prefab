@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1157223483644770996
+--- !u!1 &95290357
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,46 +8,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1157223483644770997}
-  - component: {fileID: 1157223483644770955}
+  - component: {fileID: 95290358}
   m_Layer: 7
-  m_Name: BodyCollider
+  m_Name: CellingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1157223483644770997
+--- !u!4 &95290358
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157223483644770996}
+  m_GameObject: {fileID: 95290357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1157223483769410617}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &1157223483644770955
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157223483644770996}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 01ad4c9a14cb9494cbe08a5f110641e3, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.013582706, y: -0.098984}
-  m_Size: {x: 0.7959614, y: 2.177032}
-  m_Direction: 0
 --- !u!1 &1157223483769410619
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,9 +64,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1157223483644770997}
   - {fileID: 1157223485577891470}
   - {fileID: 1157223485231277415}
+  - {fileID: 95290358}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -167,10 +150,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 01ad4c9a14cb9494cbe08a5f110641e3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -218,11 +201,16 @@ MonoBehaviour:
   groundCheck: {fileID: 1157223485577891470}
   wallCheck: {fileID: 1157223485231277415}
   invincible: 0
+  canMove: 1
   groundBelowCheckDistance: 4
   cellingCheckDistance: 5
   aggroTime: 5
-  flyForce: 7
-  aggresive: 0
+  aggroTimeCounter: 0
+  flyUpForce: 3
+  flyDownForce: -2
+  gravityScale: -12
+  onGround: 0
+  positionCellingCheck: {fileID: 95290358}
 --- !u!1 &1157223485231277414
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,12 +235,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1157223485231277414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.718, y: -0.85, z: 0}
+  m_LocalPosition: {x: -0.7, y: -0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1157223483769410617}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1157223485577891465
 GameObject:
@@ -283,5 +271,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1157223483769410617}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
