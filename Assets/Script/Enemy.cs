@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     protected int facingDir = -1;
 
     [Header("Move Info")]
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     private float idleTime = 1;
     private float idleTimeCounter;
 
