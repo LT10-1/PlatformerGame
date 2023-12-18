@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
         Player playerCollider = collision.GetComponent<Player>();
         if (playerCollider != null)
         {
-            if (!playerCollider.isRoll)
+           
                 playerCollider.PlayerHit();
 
         }

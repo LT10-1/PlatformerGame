@@ -30,11 +30,13 @@ public class Player : MonoBehaviour
     private bool isWallJump;
 
     [Header("Check Collision")]
-    
+
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform enemyCheck;
+    [SerializeField] private Transform enemyCheckRollAttack;
     [SerializeField] private float enemyCheckRadius;
+    [SerializeField] private float enemyCheckRadiusRollAttack;
     [SerializeField] private float wallCheckDistance;
     public Transform wallCheck;
     public Transform groundCheck;
@@ -55,9 +57,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 RollingDir;
     public bool isRoll;
     private bool RollButton;
-    private bool canRoll = true;
+
     [SerializeField] private float RollTimeCounter;
     [SerializeField] private float RollTimeCooldown;
+    [SerializeField] private float RollTimeAttack;
+    [SerializeField] public float RollTimeAttackCounter;
 
 
 
@@ -78,6 +82,7 @@ public class Player : MonoBehaviour
         HitTimeCounter -= Time.deltaTime;
         RollTimeCounter -= Time.deltaTime;
         bufferJumpCounter -= Time.deltaTime;
+        RollTimeAttackCounter -= Time.deltaTime;
 
 
         CollisionChecks();
@@ -86,6 +91,7 @@ public class Player : MonoBehaviour
         if (isHit)
             return;
 
+        CheckForEnemy();
         if (isRoll)
             return;
 
@@ -93,7 +99,6 @@ public class Player : MonoBehaviour
         Move();
         DoubleJump();
         FlipController();
-        CheckForEnemy();
 
     }
 
@@ -109,30 +114,64 @@ public class Player : MonoBehaviour
                 if (newEnemy.invincible)
                     return;
 
-                if (rb.velocity.y < 0)
+                if (rb.velocity.y < 0 && !isRoll)
                 {
                     newEnemy.Damage();
                     JumpButton();
 
                 }
+
+
             }
         }
+
+        Collider2D[] rollCollider = Physics2D.OverlapCircleAll(enemyCheckRollAttack.position, enemyCheckRadiusRollAttack);
+
+        foreach (var enemy in rollCollider)
+        {
+            if (enemy.GetComponent<Enemy>() != null)
+            {
+                Enemy newEnemy = enemy.GetComponent<Enemy>();
+                if (newEnemy.invincible)
+                    return;
+                if (RollButton && RollTimeAttackCounter > 0)
+                {
+                    rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
+                    newEnemy.Damage();
+
+                }
+            }
+        }
+
     }
 
     private void PlayerRolling()
     {
-        if (RollButton && RollTimeCounter < 0 && isGrounded)
+        if (RollButton && RollTimeCounter < 0)
         {
             isRoll = true;
-            rb.velocity = new Vector2(RollingDir.x * facingDir, RollingDir.y);
+            canMove = false;
             RollTimeCounter = RollTimeCooldown;
-
+            RollTimeAttackCounter = RollTimeAttack;
+            if (isRoll)
+            {
+                rb.gravityScale = 0f;
+                rb.velocity = new Vector2(RollingDir.x * facingDir, 0f);
+            }
         }
 
 
     }
 
-    void CancelPlayerRoll() => isRoll = false;
+    void CancelPlayerRoll()
+    {
+        isRoll = false;
+        canMove = true;
+
+        rb.gravityScale = 4f;
+
+    }
+
 
     private IEnumerator EnableMovementAfterDelay()
     {
@@ -164,8 +203,7 @@ public class Player : MonoBehaviour
     {
         if (isWallDetected && rb.velocity.y < 0)
         {
-            isRoll = false;
-            canRoll = false;
+
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlidingSpeed));
 
@@ -292,7 +330,7 @@ public class Player : MonoBehaviour
 
         if (isWallDetected)
         {
-            canRoll = false;
+
             WallSliding();
             if (yInput && isWallSliding)
             {
@@ -312,7 +350,7 @@ public class Player : MonoBehaviour
         if (isGrounded)
         {
 
-            canRoll = true;
+
             canMove = true;
             isWallJump = false; // Đặt isWallJump thành false khi chạm đất
 
@@ -324,13 +362,15 @@ public class Player : MonoBehaviour
         }
 
 
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
-       
+
         Gizmos.DrawWireSphere(enemyCheck.position, enemyCheckRadius);
+        Gizmos.DrawWireSphere(enemyCheckRollAttack.position, enemyCheckRadiusRollAttack);
     }
 }
