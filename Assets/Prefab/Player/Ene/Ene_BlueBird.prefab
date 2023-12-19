@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &1877545565006696289
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  idleTime: 1
+  idleTimeCounter: 0
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
@@ -167,7 +169,7 @@ MonoBehaviour:
   groundCheck: {fileID: 1877545565006696293}
   wallCheck: {fileID: 1877545565006696293}
   invincible: 0
-  canMove: 1
+  aggresive: 0
   groundBelowCheckDistance: 3
   cellingCheckDistance: 3
   positionCellingCheck: {fileID: 1877545565006696293}

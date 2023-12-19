@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
 
     [Header("Move Info")]
     [SerializeField] public float speed;
-    private float idleTime = 1;
-    private float idleTimeCounter;
+    [SerializeField] protected float idleTime = 1;
+    [SerializeField] protected float idleTimeCounter;
 
 
     [SerializeField] protected LayerMask whatisGround;
@@ -25,8 +25,8 @@ public class Enemy : MonoBehaviour
     protected bool groundDetected;
 
     [HideInInspector] public bool invincible = false;
-    [HideInInspector] public bool canMove = true;
-    
+    [HideInInspector] protected bool canMove = true;
+    [SerializeField] protected bool aggresive;
 
 
     protected virtual void Start()
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
     }
 
-    public virtual void OnTriggerStay2D(Collider2D collision)
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
 
         Player playerCollider = collision.GetComponent<Player>();
@@ -100,7 +100,9 @@ public class Enemy : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
+        if(groundCheck != null)
         Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+        if(wallCheck != null)
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
     }
 }

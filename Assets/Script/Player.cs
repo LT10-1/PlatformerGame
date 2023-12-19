@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private Transform enemyCheck;
+   
     [SerializeField] private Transform enemyCheckRollAttack;
-    [SerializeField] private float enemyCheckRadius;
+    
     [SerializeField] private float enemyCheckRadiusRollAttack;
     [SerializeField] private float wallCheckDistance;
     public Transform wallCheck;
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
             Enemy newEnemy = rollCollider.GetComponent<Enemy>();
             if (newEnemy.invincible)
             {
-                Debug.Log("enemyinvincible");
+                
                 return;
             }
 
@@ -127,14 +127,14 @@ public class Player : MonoBehaviour
             {
                 JumpButton();
                 newEnemy.Damage();
-                Debug.Log("JumpKill");
+                
             }
 
             if (isRoll && hasDamagedEnemyDuringRoll)
             {
                 rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
                 newEnemy.Damage();
-                Debug.Log("RollKill");
+                
                 hasDamagedEnemyDuringRoll = false; // Đánh dấu đã gây sát thương
             }
         }
@@ -368,7 +368,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
 
-        Gizmos.DrawWireSphere(enemyCheck.position, enemyCheckRadius);
+       
         Gizmos.DrawWireSphere(enemyCheckRollAttack.position, enemyCheckRadiusRollAttack);
     }
 }
