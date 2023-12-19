@@ -57,13 +57,14 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 RollingDir;
     public bool isRoll;
     private bool RollButton;
-
+    [SerializeField] private LayerMask whatisEnemy;
+    
     [SerializeField] private float RollTimeCounter;
     [SerializeField] private float RollTimeCooldown;
     [SerializeField] private float RollTimeAttack;
     [SerializeField] public float RollTimeAttackCounter;
 
-
+    private bool hasDamagedEnemyDuringRoll = true;
 
 
     private Animator anim;
@@ -73,7 +74,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         jumpCount = jumpMax;
-
+       
     }
 
 
@@ -91,9 +92,13 @@ public class Player : MonoBehaviour
         if (isHit)
             return;
 
-        CheckForEnemy();
+        
         if (isRoll)
             return;
+        if (!isRoll)
+        {
+            hasDamagedEnemyDuringRoll = true;
+        }
 
         InputCheck();
         Move();
@@ -102,48 +107,41 @@ public class Player : MonoBehaviour
 
     }
 
-    public void CheckForEnemy()
+
+
+
+    private void OnTriggerEnter2D(Collider2D rollCollider)
     {
-        Collider2D[] hitedCollider = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius);
+        rollCollider = Physics2D.OverlapCircle(enemyCheckRollAttack.position, enemyCheckRadiusRollAttack, whatisEnemy);
 
-        foreach (var enemy in hitedCollider)
+        if (rollCollider != null)
         {
-            if (enemy.GetComponent<Enemy>() != null)
+            Enemy newEnemy = rollCollider.GetComponent<Enemy>();
+            if (newEnemy.invincible)
             {
-                Enemy newEnemy = enemy.GetComponent<Enemy>();
-                if (newEnemy.invincible)
-                    return;
+                Debug.Log("enemyinvincible");
+                return;
+            }
 
-                if (rb.velocity.y < 0 && !isRoll)
-                {
-                    newEnemy.Damage();
-                    JumpButton();
+            if (rb.velocity.y < 0 && !isRoll)
+            {
+                JumpButton();
+                newEnemy.Damage();
+                Debug.Log("JumpKill");
+            }
 
-                }
-
-
+            if (isRoll && hasDamagedEnemyDuringRoll)
+            {
+                rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
+                newEnemy.Damage();
+                Debug.Log("RollKill");
+                hasDamagedEnemyDuringRoll = false; // Đánh dấu đã gây sát thương
             }
         }
-
-        Collider2D[] rollCollider = Physics2D.OverlapCircleAll(enemyCheckRollAttack.position, enemyCheckRadiusRollAttack);
-
-        foreach (var enemy in rollCollider)
-        {
-            if (enemy.GetComponent<Enemy>() != null)
-            {
-                Enemy newEnemy = enemy.GetComponent<Enemy>();
-                if (newEnemy.invincible)
-                    return;
-                if (RollButton && RollTimeAttackCounter > 0)
-                {
-                    rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
-                    newEnemy.Damage();
-
-                }
-            }
-        }
-
     }
+
+
+
 
     private void PlayerRolling()
     {

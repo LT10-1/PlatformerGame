@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool canMove = true;
     
 
+
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
@@ -76,7 +77,7 @@ public class Enemy : MonoBehaviour
         Player playerCollider = collision.GetComponent<Player>();
         if (playerCollider != null)
         {
-           
+            if (!playerCollider.isRoll)
                 playerCollider.PlayerHit();
 
         }
