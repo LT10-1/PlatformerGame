@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask whatIsGround;
-   
+
     [SerializeField] private Transform enemyCheckRollAttack;
-    
+
     [SerializeField] private float enemyCheckRadiusRollAttack;
     [SerializeField] private float wallCheckDistance;
     public Transform wallCheck;
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     public bool isRoll;
     private bool RollButton;
     [SerializeField] private LayerMask whatisEnemy;
-    
+
     [SerializeField] private float RollTimeCounter;
     [SerializeField] private float RollTimeCooldown;
     [SerializeField] private float RollTimeAttack;
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         jumpCount = jumpMax;
-       
+
     }
 
 
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
         if (isHit)
             return;
 
-        
+
         if (isRoll)
             return;
         if (!isRoll)
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
             Enemy newEnemy = rollCollider.GetComponent<Enemy>();
             if (newEnemy.invincible)
             {
-                
+
                 return;
             }
 
@@ -127,14 +127,14 @@ public class Player : MonoBehaviour
             {
                 JumpButton();
                 newEnemy.Damage();
-                
+
             }
 
             if (isRoll && hasDamagedEnemyDuringRoll)
             {
                 rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
                 newEnemy.Damage();
-                
+
                 hasDamagedEnemyDuringRoll = false; // Đánh dấu đã gây sát thương
             }
         }
@@ -368,7 +368,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
 
-       
+
         Gizmos.DrawWireSphere(enemyCheckRollAttack.position, enemyCheckRadiusRollAttack);
     }
 }

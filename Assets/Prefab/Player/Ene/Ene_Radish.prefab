@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  idleTime: 1
+  idleTimeCounter: 0
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
@@ -200,8 +202,11 @@ MonoBehaviour:
   wallCheckDistance: 0.22
   groundCheck: {fileID: 1157223485577891470}
   wallCheck: {fileID: 1157223485231277415}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
   invincible: 0
-  canMove: 1
+  aggresive: 0
   groundBelowCheckDistance: 4
   cellingCheckDistance: 5
   aggroTime: 5

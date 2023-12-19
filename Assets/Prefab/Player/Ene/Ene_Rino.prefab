@@ -233,6 +233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+  idleTime: 1
+  idleTimeCounter: 0
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
@@ -240,14 +242,14 @@ MonoBehaviour:
   wallCheckDistance: 1.38
   groundCheck: {fileID: 5828815073566444400}
   wallCheck: {fileID: 5828815072938215887}
-  invincible: 0
-  canMove: 1
-  speedAngry: 8
-  shockTime: 2
-  shockTimeCounter: 0
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  invincible: 0
+  aggresive: 0
+  speedAngry: 8
+  shockTime: 2
+  shockTimeCounter: 0
   enemyRenderer: {fileID: 5828815074048288586}
   waitTimeAfterDetection: 1.5
   detectionTimeCounter: 0

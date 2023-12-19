@@ -12,8 +12,8 @@ public class Ene_Rino : Enemy
     [SerializeField] private float shockTimeCounter;
 
 
-    [SerializeField] private LayerMask whatIsPlayer;
-    private RaycastHit2D playerDetection;
+    
+    
     private bool angryMode;
     private bool hitWall;
 
@@ -38,7 +38,7 @@ public class Ene_Rino : Enemy
     {
 
         CollisionCheck();
-        playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
+        
 
 
         if(canMove == true)
@@ -148,7 +148,7 @@ public class Ene_Rino : Enemy
     {
         base.OnDrawGizmos();
 
-        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + playerDetection.distance * facingDir, wallCheck.position.y));
+        
     }
 
 }

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -23,6 +22,8 @@ public class Enemy : MonoBehaviour
 
     protected bool wallDetected;
     protected bool groundDetected;
+    protected RaycastHit2D playerDetection;
+    [SerializeField] protected LayerMask whatIsPlayer;
 
     [HideInInspector] public bool invincible = false;
     [HideInInspector] protected bool canMove = true;
@@ -33,10 +34,14 @@ public class Enemy : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+
+
     }
 
     protected virtual void WalkAround()
     {
+
         idleTimeCounter -= Time.deltaTime;
 
         if (idleTimeCounter <= 0 && canMove)
@@ -60,8 +65,8 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector2(1, 1);
             rb.velocity = new Vector2(0, 0);
         }
-        
-   
+
+
     }
 
     public void DestroyMe()
@@ -82,7 +87,7 @@ public class Enemy : MonoBehaviour
 
         }
     }
-    
+
 
     protected virtual void Flip()
     {
@@ -94,15 +99,19 @@ public class Enemy : MonoBehaviour
     protected virtual void CollisionCheck()
     {
         groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatisGround);
-        wallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatisGround); 
+        wallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatisGround);
+        playerDetection = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 25f, whatIsPlayer);
     }
 
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if(groundCheck != null)
-        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-        if(wallCheck != null)
-        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
+        if (groundCheck != null)
+            Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
+        if (wallCheck != null)
+        {
+            Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
+            Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + playerDetection.distance * facingDir, wallCheck.position.y));
+        }
     }
 }

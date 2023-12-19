@@ -171,6 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  idleTime: 1
+  idleTimeCounter: 0
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
@@ -178,8 +180,11 @@ MonoBehaviour:
   wallCheckDistance: 0.77
   groundCheck: {fileID: 2130542043723134648}
   wallCheck: {fileID: 2130542042982827996}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
   invincible: 0
-  canMove: 1
+  aggresive: 0
 --- !u!1 &2130542042982827971
 GameObject:
   m_ObjectHideFlags: 0
