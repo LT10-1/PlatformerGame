@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
             {
                 JumpButton();
                 newEnemy.Damage();
-                
+                HitTimeCounter = HitTime;
 
             }
 
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
                 newEnemy.Damage();
-                HitTimeCounter = 2f;
+                HitTimeCounter = HitTime;
                 hasDamagedEnemyDuringRoll = false; // Đánh dấu đã gây sát thương
             }
 
