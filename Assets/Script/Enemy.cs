@@ -5,6 +5,8 @@ public class Enemy : MonoBehaviour
 
     protected Animator anim;
     protected Rigidbody2D rb;
+    protected CapsuleCollider2D CapCollider;
+   
 
     protected int facingDir = -1;
 
@@ -27,7 +29,7 @@ public class Enemy : MonoBehaviour
 
     [HideInInspector] public bool invincible = false;
     [HideInInspector] protected bool canMove = true;
-    [SerializeField] protected bool aggresive;
+    [SerializeField] protected bool angryMode;
 
 
     protected virtual void Start()
@@ -35,7 +37,7 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-
+        CapCollider = GetComponent<CapsuleCollider2D>();
 
     }
 
@@ -64,6 +66,7 @@ public class Enemy : MonoBehaviour
             anim.SetTrigger("isHit");
             transform.localScale = new Vector2(1, 1);
             rb.velocity = new Vector2(0, 0);
+            CapCollider.enabled = false;
         }
 
 
@@ -84,9 +87,12 @@ public class Enemy : MonoBehaviour
         {
             if (!playerCollider.isRoll)
                 playerCollider.PlayerHit();
+           
 
         }
     }
+
+    
 
 
     protected virtual void Flip()

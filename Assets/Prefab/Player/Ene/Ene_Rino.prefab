@@ -73,9 +73,9 @@ GameObject:
   - component: {fileID: 5828815074048288587}
   - component: {fileID: 5828815074048288586}
   - component: {fileID: 5828815074048288589}
-  - component: {fileID: 5828815074048288588}
   - component: {fileID: 5828815074048288591}
   - component: {fileID: 5828815074048288590}
+  - component: {fileID: 5732320638624643941}
   m_Layer: 7
   m_Name: Ene_Rino
   m_TagString: Untagged
@@ -173,32 +173,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &5828815074048288588
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5828815074048288689}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.12695539, y: -0.20910287}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.25, y: 2.125}
-    newSize: {x: 3.25, y: 2.125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.309037, y: 1.7067943}
-  m_EdgeRadius: 0
 --- !u!95 &5828815074048288591
 Animator:
   serializedVersion: 5
@@ -246,10 +220,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   invincible: 0
-  aggresive: 0
+  angryMode: 0
   speedAngry: 8
   shockTime: 2
   shockTimeCounter: 0
   enemyRenderer: {fileID: 5828815074048288586}
   waitTimeAfterDetection: 1.5
   detectionTimeCounter: 0
+--- !u!70 &5732320638624643941
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5828815074048288689}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1235199, y: -0.46185827}
+  m_Size: {x: 2.3262825, y: 2.3262835}
+  m_Direction: 0

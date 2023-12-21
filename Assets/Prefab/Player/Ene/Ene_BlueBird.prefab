@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1877545565006696293}
   - component: {fileID: 1877545565006696292}
   - component: {fileID: 1877545565006696294}
-  - component: {fileID: 1877545565006696289}
   - component: {fileID: 1877545565006696288}
   - component: {fileID: 1877545565006696295}
+  - component: {fileID: 6000766080345465719}
   m_Layer: 7
   m_Name: Ene_BlueBird
   m_TagString: Untagged
@@ -109,22 +109,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &1877545565006696289
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877545565006696291}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.78
 --- !u!95 &1877545565006696288
 Animator:
   serializedVersion: 5
@@ -172,7 +156,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   invincible: 0
-  aggresive: 0
+  angryMode: 0
   groundBelowCheckDistance: 3
   cellingCheckDistance: 3
   positionCellingCheck: {fileID: 1877545565006696293}
@@ -180,3 +164,19 @@ MonoBehaviour:
   flyUpForce: 8
   flyDownForce: 1
   canFly: 1
+--- !u!70 &6000766080345465719
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877545565006696291}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 2, y: 2}
+  m_Direction: 0

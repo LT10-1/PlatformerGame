@@ -24,7 +24,7 @@ public class Ene_Plant : Enemy
         flipTimeCounter -= Time.deltaTime;
 
         
-        if (idleTimeCounter < 0/* && playerDetection*/)
+        if (idleTimeCounter < 0 && playerDetection)
         {
             idleTimeCounter = idleTime;
             anim.SetTrigger("Attack");

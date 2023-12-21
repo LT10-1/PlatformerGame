@@ -14,7 +14,7 @@ public class Ene_Ghost : Enemy
     {
         base.Start();
         sr = GetComponent<SpriteRenderer>();
-        aggresive = true;
+        angryMode = true;
         invincible = true;  
         player = GameObject.Find("Player").transform;
     }
@@ -31,17 +31,17 @@ public class Ene_Ghost : Enemy
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
 
-        if (activeTimeCounter < 0 && idleTimeCounter < 0 && aggresive)
+        if (activeTimeCounter < 0 && idleTimeCounter < 0 && angryMode)
         {
             anim.SetTrigger("Desappear");
-            aggresive = false;
+            angryMode = false;
             idleTimeCounter = idleTime;
         }
-        if (activeTimeCounter < 0 && idleTimeCounter < 0 && !aggresive)
+        if (activeTimeCounter < 0 && idleTimeCounter < 0 && !angryMode)
         {
             ChoosePosition();
             anim.SetTrigger("Appear");
-            aggresive = true;
+            angryMode = true;
             activeTimeCounter = activeTime;
         }
 
@@ -74,7 +74,7 @@ public class Ene_Ghost : Enemy
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
-        if (aggresive)
+        if (angryMode)
         {
             base.OnTriggerStay2D(collision);
 

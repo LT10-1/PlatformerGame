@@ -49,9 +49,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 HitDirection;
     [SerializeField] private float HitTime;
     [SerializeField] private float CooldownTimePlayerHit;
-    private bool isHit;
-    private bool canHit = true;
-    private float HitTimeCounter;
+    public bool playerisHit;
+    public bool canHit = true;
+    [SerializeField] private float HitTimeCounter;
 
     [Header("PlayerRoll")]
     [SerializeField] private Vector2 RollingDir;
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         CollisionChecks();
         AnimController();
         PlayerRolling();
-        if (isHit)
+        if (playerisHit)
             return;
 
 
@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
             {
                 JumpButton();
                 newEnemy.Damage();
+                
 
             }
 
@@ -134,9 +135,11 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(HitDirection.x * -facingDir, RollingDir.y * 3f);
                 newEnemy.Damage();
-
+                HitTimeCounter = 2f;
                 hasDamagedEnemyDuringRoll = false; // Đánh dấu đã gây sát thương
             }
+
+            
         }
     }
 
@@ -184,7 +187,7 @@ public class Player : MonoBehaviour
     {
         if (canHit && HitTimeCounter < 0)
         {
-            isHit = true;
+            playerisHit = true;
             HitTimeCounter = CooldownTimePlayerHit;
             rb.velocity = new Vector2(HitDirection.x * -facingDir, HitDirection.y);
             Invoke("CancelPlayerHit", HitTime);
@@ -194,7 +197,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void CancelPlayerHit() => isHit = false;
+    public void CancelPlayerHit() => playerisHit = false;
 
 
     private void WallSliding()
@@ -313,7 +316,7 @@ public class Player : MonoBehaviour
         anim.SetFloat("yInput", rb.velocity.y);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isSliding", isWallSliding);
-        anim.SetBool("isHit", isHit);
+        anim.SetBool("isHit", playerisHit);
         anim.SetBool("isRoll", isRoll);
     }
     private void CollisionChecks()

@@ -14,7 +14,7 @@ public class Ene_Rino : Enemy
 
     
     
-    private bool angryMode;
+    
     private bool hitWall;
 
     [Header("Visuals")]

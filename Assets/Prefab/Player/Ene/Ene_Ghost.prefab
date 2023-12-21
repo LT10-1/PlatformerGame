@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9132524659426539412}
   - component: {fileID: 9132524659426539413}
-  - component: {fileID: 9132524659426539414}
   - component: {fileID: 9132524659426539411}
   - component: {fileID: 9132524659426539400}
   - component: {fileID: 9132524659426539415}
+  - component: {fileID: 5271490798661134644}
   m_Layer: 7
   m_Name: Ene_Ghost
   m_TagString: Untagged
@@ -88,22 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &9132524659426539414
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9132524659426539401}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.79
 --- !u!50 &9132524659426539411
 Rigidbody2D:
   serializedVersion: 4
@@ -172,9 +156,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   invincible: 0
-  aggresive: 0
+  angryMode: 0
   activeTime: 6
   activeTimeCounter: 0
   xOffset:
   - -7
   - 7
+--- !u!70 &5271490798661134644
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132524659426539401}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.03454113, y: -0.06678009}
+  m_Size: {x: 1.5571747, y: 1.5571747}
+  m_Direction: 0
