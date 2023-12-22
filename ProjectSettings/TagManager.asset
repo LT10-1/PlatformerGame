@@ -14,8 +14,8 @@ TagManager:
   - Ground
   - Enemy
   - Player
-  - Bullet
-  - 
+  - Bullet_Horizontal
+  - Buleet_Vertical
   - 
   - 
   - 

@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Ene_Bat : Enemy
 {
-    [SerializeField] private Transform[] idlePoint;
 
-    private Vector2 destination;
-    private bool canBeAngryMode = true;
+    [SerializeField] private Transform[] idlePoint;
+    [SerializeField] private float checkRadius;
     private bool playerDetected;
     private Transform player;
 
+    private Vector2 destination;
 
-    [SerializeField] private float checkRadius;
+    private bool canBeAngryMode = true;
     [SerializeField] private float defaultSpeed;
 
     
@@ -88,7 +88,7 @@ public class Ene_Bat : Enemy
 
     protected override void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
         base.OnDrawGizmos();
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 }
