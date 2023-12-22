@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
     protected Animator anim;
     protected Rigidbody2D rb;
     protected CapsuleCollider2D CapCollider;
-   
+
 
     protected int facingDir = -1;
 
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool invincible = false;
     [HideInInspector] protected bool canMove = true;
     [SerializeField] protected bool angryMode;
-
+    public bool isDead;
 
     protected virtual void Start()
     {
@@ -43,7 +43,13 @@ public class Enemy : MonoBehaviour
 
     protected virtual void WalkAround()
     {
-
+        if (isDead) return;
+        if (!canMove)
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+        canMove = true;
+        anim.SetFloat("xVelocity", rb.velocity.x);
         idleTimeCounter -= Time.deltaTime;
 
         if (idleTimeCounter <= 0 && canMove)
@@ -56,6 +62,7 @@ public class Enemy : MonoBehaviour
             idleTimeCounter = idleTime;
             Flip();
         }
+
     }
 
     public virtual void Damage()
@@ -64,9 +71,19 @@ public class Enemy : MonoBehaviour
         {
             canMove = false;
             anim.SetTrigger("isHit");
-            transform.localScale = new Vector2(1, 1);
-            rb.velocity = new Vector2(0, 0);
-            CapCollider.enabled = false;
+            if (!canMove)
+            {
+                isDead = true;
+                if (isDead)
+                {
+                    rb.velocity = new Vector2(transform.position.x * -facingDir, 8f);
+                    rb.gravityScale = 5f;
+                    CapCollider.enabled = false;
+                    wallDetected = false; groundDetected = false;
+                    
+                }
+            }
+
         }
 
 
@@ -77,6 +94,7 @@ public class Enemy : MonoBehaviour
         canMove = false;
         Destroy(gameObject);
         rb.velocity = new Vector2(0, 0);
+
     }
 
     protected virtual void OnTriggerStay2D(Collider2D collision)
@@ -87,12 +105,12 @@ public class Enemy : MonoBehaviour
         {
             if (!playerCollider.isRoll)
                 playerCollider.PlayerHit();
-           
+
 
         }
     }
 
-    
+
 
 
     protected virtual void Flip()

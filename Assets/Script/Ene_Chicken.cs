@@ -13,7 +13,7 @@ public class Ene_Chicken : Enemy
 
     private void Update()
     {
-
+        if(isDead) return;
         WalkAround();
 
 

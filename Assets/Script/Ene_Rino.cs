@@ -36,7 +36,7 @@ public class Ene_Rino : Enemy
 
     void Update()
     {
-
+        if (isDead) return;
         CollisionCheck();
         
 

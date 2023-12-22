@@ -26,6 +26,7 @@ public class Ene_Radish : Enemy
 
     void Update()
     {
+        if (isDead) return;
         aggroTimeCounter -= Time.deltaTime;
 
         if (aggroTimeCounter < 0)

@@ -27,6 +27,7 @@ public class Ene_BlueBird : Enemy
 
     void Update()
     {
+        if (isDead) return;
         CollisionCheck();
 
         if (cellingDetected)
