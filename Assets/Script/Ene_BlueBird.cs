@@ -27,7 +27,11 @@ public class Ene_BlueBird : Enemy
 
     void Update()
     {
-        if (isDead) return;
+        if (isDead)
+        {
+            rb.gravityScale = 5f;
+            return;
+        }
         CollisionCheck();
 
         if (cellingDetected)

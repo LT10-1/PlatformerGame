@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ene_Bat : Enemy
 {
@@ -13,7 +13,9 @@ public class Ene_Bat : Enemy
     private bool canBeAngryMode = true;
     [SerializeField] private float defaultSpeed;
 
-    
+    [SerializeField] private SpriteRenderer enemyRenderer;
+    [SerializeField] private float waitTimeAfterDetection = 3f; // Thời gian đợi sau khi phát hiện người chơi
+    [SerializeField] private float detectionTimeCounter; // Bộ đếm thời gian sau khi phát hiện
 
     protected override void Start()
     {
@@ -22,6 +24,7 @@ public class Ene_Bat : Enemy
         defaultSpeed = speed;
         destination = idlePoint[0].position;
         transform.position = idlePoint[0].position;
+        detectionTimeCounter = waitTimeAfterDetection;
     }
 
     // Update is called once per frame
@@ -36,15 +39,41 @@ public class Ene_Bat : Enemy
 
         playerDetected = Physics2D.OverlapCircle(transform.position, checkRadius, whatIsPlayer);
 
-        if (playerDetected && !angryMode && canBeAngryMode)
+        if (playerDetected && !angryMode && canBeAngryMode && detectionTimeCounter > 0)
         {
-            angryMode = true;
-            canBeAngryMode = false;
-            destination = player.transform.position;
+            detectionTimeCounter -= Time.deltaTime;
+            
+           
+            
+
+            if (detectionTimeCounter > 0)
+            {
+               
+                destination = idlePoint[0].position;
+                
+                rb.velocity = new Vector2(0, 0);
+                enemyRenderer.color = Color.red;
+            }
+
+            else if (detectionTimeCounter <= 0) 
+            {
+
+                destination = player.transform.position;
+                
+                angryMode = true; 
+               
+                canBeAngryMode = false;
+
+                detectionTimeCounter = waitTimeAfterDetection;
+
+                enemyRenderer.color = Color.red;
+
+            }
+            
 
         }
 
-        if (angryMode)
+        else if (angryMode == true)
         {
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
@@ -52,9 +81,10 @@ public class Ene_Bat : Enemy
             {
                 angryMode = false;
 
-                int i = Random.Range(0, idlePoint.Length);
-                destination = idlePoint[i].position;
+                
+                destination = idlePoint[0].position;
                 speed = speed * .5f;
+                enemyRenderer.color = Color.white;
             }
         }
         else
@@ -67,6 +97,7 @@ public class Ene_Bat : Enemy
                     idleTimeCounter = idleTime;
                 canBeAngryMode = true;
                 speed = defaultSpeed;
+                enemyRenderer.color = Color.white;
             }
         }
 

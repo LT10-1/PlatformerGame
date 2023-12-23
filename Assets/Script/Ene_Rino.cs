@@ -75,7 +75,7 @@ public class Ene_Rino : Enemy
                 detectionTimeCounter = waitTimeAfterDetection; // Đặt lại thời gian chờ sau khi phát hiện để sử dụng cho lần tiếp theo
 
 
-                enemyRenderer.color = Color.white;  // Đặt lại màu của enemy về màu ban đầu
+                enemyRenderer.color = Color.white;
             }
         }
 
@@ -88,6 +88,8 @@ public class Ene_Rino : Enemy
         }
         else //angrymode = true
         {
+            enemyRenderer.color = Color.red;
+            rb.velocity = new Vector2(speedAngry * facingDir, rb.velocity.y);
 
             if (!groundDetected)
             {
@@ -95,7 +97,6 @@ public class Ene_Rino : Enemy
                 angryMode = false;
             }
 
-            rb.velocity = new Vector2(speedAngry * facingDir, rb.velocity.y);
 
 
 
@@ -104,13 +105,14 @@ public class Ene_Rino : Enemy
                 hitWall = true;
                 invincible = false;
                 canMove = false;
-                
+                enemyRenderer.color = Color.white;
                 shockTimeCounter = shockTime;
                 Flip();
 
             }
             if (hitWall)
             {
+                enemyRenderer.color = Color.white;
                 invincible = false;
                 rb.velocity = new Vector2(0, 0);
             }

@@ -13,6 +13,7 @@ public class Ene_Trunk : Enemy
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform buttletOrigin;
     [SerializeField] private float bulletSpeed;
+    [SerializeField] public Vector2 bulletGrenade;
 
     protected override void Start()
     {
@@ -53,10 +54,12 @@ public class Ene_Trunk : Enemy
 
     private void AttackEvent()
     {
-        GameObject newBullet = Instantiate(bulletPrefab, buttletOrigin.transform.position, buttletOrigin.transform.rotation);
+        GameObject newBullet = Instantiate(bulletPrefab, buttletOrigin.transform.position , buttletOrigin.transform.rotation);
 
         newBullet.GetComponent<Ene_Bullet>().SetupSpeed(bulletSpeed * facingDir, 0f);
         Destroy(newBullet, 3f);
+       
+
     }
 
 

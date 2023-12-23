@@ -123,10 +123,10 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &3112149344698242270
 Animator:
   serializedVersion: 5
@@ -163,6 +163,8 @@ MonoBehaviour:
   speed: 4
   idleTime: 2
   idleTimeCounter: 0
+  FlipTime: 0
+  FlipTimeCounter: 0
   whatisGround:
     serializedVersion: 2
     m_Bits: 128
@@ -175,6 +177,7 @@ MonoBehaviour:
     m_Bits: 256
   invincible: 0
   angryMode: 0
+  isDead: 0
   idlePoint:
   - {fileID: 5481993779025781647}
   - {fileID: 5481993779183196787}
@@ -182,7 +185,7 @@ MonoBehaviour:
   - {fileID: 5481993779566315249}
   - {fileID: 5481993780445813230}
   checkRadius: 5
-  yOffset: 3
+  yOffset: 5
   playerDetected: 0
   playerCheck: {fileID: 5481993779761405259}
   bulletPrefab: {fileID: 1887756100150612183, guid: 29c321cb730d07f4385ff155935157ef, type: 3}

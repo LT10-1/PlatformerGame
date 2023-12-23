@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float speed;
     [SerializeField] protected float idleTime = 1;
     [SerializeField] protected float idleTimeCounter;
-
+    [SerializeField] protected float FlipTime;
+    [SerializeField] protected float FlipTimeCounter;
 
     [SerializeField] protected LayerMask whatisGround;
     [SerializeField] protected float groundCheckDistance;
@@ -51,7 +53,7 @@ public class Enemy : MonoBehaviour
         canMove = true;
         anim.SetFloat("xVelocity", rb.velocity.x);
         idleTimeCounter -= Time.deltaTime;
-
+        FlipTimeCounter -= Time.deltaTime;
         if (idleTimeCounter <= 0 && canMove)
             rb.velocity = new Vector2(speed * facingDir, 0f);
         else
@@ -59,6 +61,13 @@ public class Enemy : MonoBehaviour
 
         if (wallDetected || !groundDetected)
         {
+            idleTimeCounter = idleTime;
+            Flip();
+        }
+        else if(FlipTimeCounter < 0 )
+        {
+            FlipTime = Random.Range(3f, 10f);
+            FlipTimeCounter = FlipTime;
             idleTimeCounter = idleTime;
             Flip();
         }
@@ -76,11 +85,13 @@ public class Enemy : MonoBehaviour
                 isDead = true;
                 if (isDead)
                 {
+                    
+                    transform.Rotate(new Vector3(0, 0, Random.Range(-45f,-180f)));
+                    
                     rb.velocity = new Vector2(transform.position.x * -facingDir, 8f);
                     rb.gravityScale = 5f;
                     CapCollider.enabled = false;
-                    wallDetected = false; groundDetected = false;
-                    
+
                 }
             }
 
@@ -88,6 +99,8 @@ public class Enemy : MonoBehaviour
 
 
     }
+
+    
 
     public void DestroyMe()
     {

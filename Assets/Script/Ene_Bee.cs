@@ -48,6 +48,7 @@ public class Ene_Bee : Enemy
 
         if (!angryMode)
         {
+            
             transform.position = Vector2.MoveTowards(transform.position, idlePoint[idlePointIndex].position, speed * Time.deltaTime);
             if (Vector2.Distance(transform.position, idlePoint[idlePointIndex].position) < .1f)
             {
@@ -60,10 +61,10 @@ public class Ene_Bee : Enemy
         {
            
 
-            Vector2 newPosition = new Vector2(player.transform.position.x, player.transform.position.y + yOffset);
+            Vector2 newPosition = new Vector2(idlePoint[idlePointIndex].position.x, idlePoint[idlePointIndex].position.y);
             transform.position = Vector2.MoveTowards(transform.position, newPosition, speed * Time.deltaTime);
 
-            float xDifference = transform.position.x - player.position.x;
+            float xDifference = transform.position.x - idlePoint[idlePointIndex].position.x;
 
             if (Mathf.Abs(xDifference) < 0.15f)
             {
@@ -82,6 +83,7 @@ public class Ene_Bee : Enemy
         idleTimeCounter = idleTime;
         angryMode = false;
         speed = defaultSpeed;
+        Destroy(newBullet, 4f);
     }
 
     protected override void OnDrawGizmos()

@@ -3,8 +3,8 @@ using UnityEngine;
 public class Ene_Bullet : Enemy
 {
 
-     private float xSpeed;
-     private float ySpeed;
+    [SerializeField] private float xSpeed;
+    [SerializeField] private float ySpeed;
 
 
 
@@ -18,6 +18,7 @@ public class Ene_Bullet : Enemy
     void Update()
     {
         rb.velocity = new Vector2(xSpeed, ySpeed);
+
     }
 
     public void SetupSpeed(float x, float y)
@@ -28,6 +29,7 @@ public class Ene_Bullet : Enemy
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
+
         base.OnTriggerStay2D(collision);
         Destroy(gameObject);
     }

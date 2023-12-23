@@ -108,10 +108,10 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &7074626936183698284
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -164,6 +164,8 @@ MonoBehaviour:
   speed: 2
   idleTime: 1
   idleTimeCounter: 0
+  FlipTime: 0
+  FlipTimeCounter: 0
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
@@ -176,12 +178,14 @@ MonoBehaviour:
     m_Bits: 256
   invincible: 0
   angryMode: 0
+  isDead: 0
   checkRadius: 0
   attackCooldown: 3
   attackCooldownCounter: 0
   bulletPrefab: {fileID: 9017523242551522358, guid: 233acf2f23965234aba0eb3e35f55712, type: 3}
   buttletOrigin: {fileID: 7074626936639037250}
   bulletSpeed: 3
+  bulletGrenade: {x: 0, y: 0}
 --- !u!1 &7074626936358140291
 GameObject:
   m_ObjectHideFlags: 0
