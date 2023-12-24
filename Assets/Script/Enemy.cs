@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.XR;
 
 public class Enemy : MonoBehaviour
@@ -32,7 +33,9 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool invincible = false;
     [HideInInspector] protected bool canMove = true;
     [SerializeField] protected bool angryMode;
+
     public bool isDead;
+    
 
     protected virtual void Start()
     {
