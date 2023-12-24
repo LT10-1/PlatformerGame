@@ -141,6 +141,8 @@ MonoBehaviour:
   isDead: 0
   xSpeed: 0
   ySpeed: 0
+  gravity: 0
+  velocity: {x: 0, y: -5}
 --- !u!95 &8765325268444681632
 Animator:
   serializedVersion: 5

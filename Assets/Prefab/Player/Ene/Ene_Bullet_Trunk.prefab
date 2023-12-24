@@ -138,8 +138,10 @@ MonoBehaviour:
   invincible: 0
   angryMode: 0
   isDead: 0
-  xSpeed: 0
+  xSpeed: 5
   ySpeed: 0
+  gravity: 0
+  velocity: {x: 0, y: -5}
 --- !u!70 &7377745156649064923
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ene_Plant : Enemy
@@ -40,7 +41,9 @@ public class Ene_Plant : Enemy
     {
         GameObject newBullet = Instantiate(bulletPrefab, buttletOrigin.transform.position, buttletOrigin.transform.rotation);
 
+        
         newBullet.GetComponent<Ene_Bullet>().SetupSpeed(bulletSpeed * facingDir, 0f);
+        
     }
 
     protected override void OnDrawGizmos()

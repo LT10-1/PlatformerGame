@@ -5,21 +5,26 @@ public class Ene_Bullet : Enemy
 
     [SerializeField] private float xSpeed;
     [SerializeField] private float ySpeed;
-
+    [SerializeField] float gravity;
+    [SerializeField] Vector2 velocity;
 
 
     protected override void Start()
     {
         base.Start();
-
+        gravity =15f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(transform.position.x * 2f * facingDir, ySpeed);
-        rb.AddForce(-transform.up * 15f);
+        velocity.y += gravity * Time.deltaTime;
+        rb.velocity = new Vector2(xSpeed, -velocity.y);
+
+        
     }
+
+    
 
     public void SetupSpeed(float x, float y)
     {
