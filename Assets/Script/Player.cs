@@ -30,14 +30,15 @@ public class Player : MonoBehaviour
     private bool isWallJump;
 
     [Header("Check Collision")]
-
-    [SerializeField] private Vector2 groundCheckSize;
+/*
+    [SerializeField] private Vector2 groundCheckSize;*/
     [SerializeField] private LayerMask whatIsGround;
 
     [SerializeField] private Transform enemyCheckRollAttack;
 
     [SerializeField] private float enemyCheckRadiusRollAttack;
     [SerializeField] private float wallCheckDistance;
+    [SerializeField] private float groundCheckDistance;
     public Transform wallCheck;
     public Transform groundCheck;
     private bool isWallDetected;
@@ -325,7 +326,7 @@ public class Player : MonoBehaviour
     {
 
         //Ground check box
-        isGrounded = Physics2D.BoxCast(groundCheck.position, groundCheckSize, 0, Vector2.zero, whatIsGround);
+        isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
 
 
         //Wall check box
@@ -370,7 +371,7 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+        Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance * facingDir, wallCheck.position.y));
 
 

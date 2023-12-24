@@ -6,7 +6,7 @@ public class Ene_Bat : Enemy
     [SerializeField] private Transform[] idlePoint;
     [SerializeField] private float checkRadius;
     private bool playerDetected;
-    private Transform player;
+    
 
     private Vector2 destination;
 
@@ -20,7 +20,7 @@ public class Ene_Bat : Enemy
     protected override void Start()
     {
         base.Start();
-        player = GameObject.Find("Player").transform;
+        
         defaultSpeed = speed;
         destination = idlePoint[0].position;
         transform.position = idlePoint[0].position;
@@ -57,9 +57,16 @@ public class Ene_Bat : Enemy
 
             else if (detectionTimeCounter <= 0) 
             {
+                if(player != null)
+                {
 
                 destination = player.transform.position;
-                
+                }
+                else
+                {
+                    angryMode = false;
+                    canBeAngryMode = true;
+                }
                 angryMode = true; 
                
                 canBeAngryMode = false;
@@ -106,7 +113,8 @@ public class Ene_Bat : Enemy
 
     private void FlipController()
     {
-
+        if(player == null)
+            return;
         if (facingDir == -1 && transform.position.x < destination.x)
         {
             Flip();

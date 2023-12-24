@@ -9,7 +9,7 @@ public class Ene_Bee : Enemy
     [SerializeField] private float yOffset;
     [SerializeField] private bool playerDetected;
     [SerializeField] private Transform playerCheck;
-    private Transform player;
+   
     private float defaultSpeed;
     private int idlePointIndex;
 
@@ -22,7 +22,7 @@ public class Ene_Bee : Enemy
     protected override void Start()
     {
         base.Start();
-        player = GameObject.Find("Player").transform;
+        
         defaultSpeed = speed;
     }
 
@@ -36,6 +36,9 @@ public class Ene_Bee : Enemy
         idleTimeCounter -= Time.deltaTime;
         
         if (idle)
+            return;
+
+        if (player == null)
             return;
 
         playerDetected = Physics2D.OverlapCircle(playerCheck.position, checkRadius, whatIsPlayer);
@@ -78,7 +81,7 @@ public class Ene_Bee : Enemy
     private void AttackEvent()
     {
         GameObject newBullet = Instantiate(bulletPrefab, buttletOrigin.transform.position, buttletOrigin.transform.rotation);
-        newBullet.GetComponent<Ene_Bullet_Bee>().SetupSpeed(0f, -speed);
+        newBullet.GetComponent<Ene_Bullet_Bee>().SetupSpeed(0f, -bulletSpeed);
 
         idleTimeCounter = idleTime;
         angryMode = false;

@@ -35,15 +35,23 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected bool angryMode;
 
     public bool isDead;
+
+    protected Transform player;
     
+
+    protected virtual void Awake()
+    {
+        
+    }
 
     protected virtual void Start()
     {
+        
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
+        player = PlayerManager.instance.currentPlayer.transform;
         CapCollider = GetComponent<CapsuleCollider2D>();
-
+        
     }
 
     protected virtual void WalkAround()

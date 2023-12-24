@@ -6,7 +6,7 @@ public class Ene_Ghost : Enemy
     [SerializeField] private float activeTime;
     [SerializeField] private float activeTimeCounter = 4;
 
-    private Transform player;
+    
     private SpriteRenderer sr;
     [SerializeField] private float[] xOffset;
 
@@ -14,15 +14,24 @@ public class Ene_Ghost : Enemy
     {
         base.Start();
         sr = GetComponent<SpriteRenderer>();
-        angryMode = true;
-        invincible = true;  
-        player = GameObject.Find("Player").transform;
+        angryMode = false;
+         
+        
     }
 
 
 
     private void Update()
     {
+        if (player == null)
+        {
+            anim.SetTrigger("Desappear");
+            return;
+        }
+        if(isDead)
+        {
+            return;
+        }
         activeTimeCounter -= Time.deltaTime;
         idleTimeCounter -= Time.deltaTime;
 
@@ -36,6 +45,7 @@ public class Ene_Ghost : Enemy
             anim.SetTrigger("Desappear");
             angryMode = false;
             idleTimeCounter = idleTime;
+            invincible = false;
         }
         if (activeTimeCounter < 0 && idleTimeCounter < 0 && !angryMode)
         {
@@ -43,13 +53,22 @@ public class Ene_Ghost : Enemy
             anim.SetTrigger("Appear");
             angryMode = true;
             activeTimeCounter = activeTime;
+            invincible = false;
         }
 
-        if(facingDir == -1 && transform.position.x < player.transform.position.x)
+        FlipController();
+    }
+
+    private void FlipController()
+    {
+        if (player == null)
+            return;
+
+        if (facingDir == -1 && transform.position.x < player.transform.position.x)
         {
             Flip();
         }
-        else if(facingDir == 1 && transform.position.x > player.transform.position.x)
+        else if (facingDir == 1 && transform.position.x > player.transform.position.x)
         {
             Flip();
         }

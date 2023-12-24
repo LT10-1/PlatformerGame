@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7871135822692891863}
   - component: {fileID: 7871135822692891880}
   - component: {fileID: 7871135822692891861}
-  - component: {fileID: 7871135822692891860}
+  - component: {fileID: 5254211900380718206}
   - component: {fileID: 7871135822692891882}
   - component: {fileID: 2103901177}
   - component: {fileID: 2103901178}
@@ -228,8 +228,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &7871135822692891860
-BoxCollider2D:
+--- !u!70 &5254211900380718206
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -241,19 +241,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.012679577, y: -0.23668122}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.1293497, y: 1.4421077}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.053534508, y: -0.25482345}
+  m_Size: {x: 0.86507225, y: 1.4903531}
+  m_Direction: 0
 --- !u!114 &7871135822692891882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,13 +262,13 @@ MonoBehaviour:
   bufferJumpCounter: 0
   wallSlidingSpeed: 0.5
   wallJumpDirection: {x: 20, y: 12}
-  groundCheckSize: {x: 1.07, y: 0.1}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 72
   enemyCheckRollAttack: {fileID: 603488006}
   enemyCheckRadiusRollAttack: 1
   wallCheckDistance: 1.01
+  groundCheckDistance: 0.37
   wallCheck: {fileID: 7871135821783560031}
   groundCheck: {fileID: 7871135821130865089}
   HitDirection: {x: 5, y: 12}
@@ -363,4 +353,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impulse: {fileID: 2103901177}
   shakeDir: {x: 0.2, y: 0.5, z: 0}
-  forceMultiplier: 1
+  forceMultiplier: 0.5
