@@ -10,7 +10,7 @@ public class Ene_Radish : Enemy
     [SerializeField] private float groundBelowCheckDistance;
     [SerializeField] private float cellingCheckDistance;
     [SerializeField] private float aggroTime;
-    [SerializeField] private float aggroTimeCounter;
+    [SerializeField] private float angryTimeCounter;
     [SerializeField] private float flyUpForce = 5f;
     [SerializeField] private float flyDownForce = -5f;
     [SerializeField] private float gravityScale = -12f;
@@ -27,9 +27,10 @@ public class Ene_Radish : Enemy
     void Update()
     {
         if (isDead) return;
-        aggroTimeCounter -= Time.deltaTime;
+        CollisionCheck();
+        angryTimeCounter -= Time.deltaTime;
 
-        if (aggroTimeCounter < 0)
+        if (angryTimeCounter < 0)
         {
             onGround = false;
 
@@ -56,7 +57,7 @@ public class Ene_Radish : Enemy
 
             }
         }
-        else if (aggroTimeCounter > 0)
+        else if (angryTimeCounter > 0)
         {
             rb.velocity = new Vector2(0, gravityScale);
             if (groundDetected)
@@ -64,11 +65,10 @@ public class Ene_Radish : Enemy
                 WalkAround();
                 onGround = true;
                 rb.gravityScale = 0f;
-                rb.velocity = (rb.velocity);
+               
             }
 
         }
-        CollisionCheck();
 
 
         anim.SetFloat("xVelocity", rb.velocity.x);
@@ -98,7 +98,7 @@ public class Ene_Radish : Enemy
     {
         if (!onGround)
         {
-            aggroTimeCounter = aggroTime;
+            angryTimeCounter = aggroTime;
             onGround = true;
 
         }

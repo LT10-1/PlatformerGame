@@ -216,8 +216,8 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckDistance: 1.51
   wallCheckDistance: 1.38
-  groundCheck: {fileID: 5828815073566444400}
-  wallCheck: {fileID: 5828815072938215887}
+  groundCheck: {fileID: 5828815074048288587}
+  wallCheck: {fileID: 5828815074048288587}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256

@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
                 hasDamagedEnemyDuringRoll = false; // Đánh dấu đã gây sát thương
             }
 
-            
+
         }
     }
 
@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
 
     public void PlayerHit()
     {
+
         if (canHit && HitTimeCounter < 0)
         {
             playerisHit = true;
@@ -192,6 +193,7 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(HitDirection.x * -facingDir, HitDirection.y);
             Invoke("CancelPlayerHit", HitTime);
 
+            GetComponent<CameraShake>().ScreenShake(-facingDir);
         }
 
 

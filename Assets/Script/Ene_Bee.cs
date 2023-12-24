@@ -78,7 +78,7 @@ public class Ene_Bee : Enemy
     private void AttackEvent()
     {
         GameObject newBullet = Instantiate(bulletPrefab, buttletOrigin.transform.position, buttletOrigin.transform.rotation);
-        newBullet.GetComponent<Ene_Bullet>().SetupSpeed(0f, -speed);
+        newBullet.GetComponent<Ene_Bullet_Bee>().SetupSpeed(0f, -speed);
 
         idleTimeCounter = idleTime;
         angryMode = false;

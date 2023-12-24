@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7060458482074558412}
   - component: {fileID: 497063262496503869}
   - component: {fileID: 7583199318840497257}
-  - component: {fileID: 266438151069442730}
   - component: {fileID: 104991914087710010}
   - component: {fileID: 8653701755625656504}
+  - component: {fileID: 7590576269885527893}
   m_Layer: 10
   m_Name: Ene_Bullet_Bee
   m_TagString: Untagged
@@ -109,36 +109,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &266438151069442730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887756100150612183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421d440833881bf41bdf9674999fd76a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  idleTime: 1
-  idleTimeCounter: 0
-  FlipTime: 0
-  FlipTimeCounter: 0
-  whatisGround:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheckDistance: 0
-  wallCheckDistance: 0
-  groundCheck: {fileID: 7060458482074558412}
-  wallCheck: {fileID: 7060458482074558412}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 256
-  invincible: 0
-  angryMode: 0
-  isDead: 0
 --- !u!70 &104991914087710010
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -176,3 +146,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7590576269885527893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887756100150612183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303ef34575a5856458ddfd6ec2ddb187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  idleTime: 1
+  idleTimeCounter: 0
+  FlipTime: 0
+  FlipTimeCounter: 0
+  whatisGround:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0
+  wallCheckDistance: 0
+  groundCheck: {fileID: 0}
+  wallCheck: {fileID: 0}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
+  invincible: 0
+  angryMode: 0
+  isDead: 0
+  xSpeed: 0
+  ySpeed: 0

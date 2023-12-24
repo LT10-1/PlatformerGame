@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Ene_Bullet : Enemy
+public class Ene_Bullet_Bee : Enemy
 {
 
     [SerializeField] private float xSpeed;
@@ -17,8 +17,8 @@ public class Ene_Bullet : Enemy
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(transform.position.x * 2f * facingDir, ySpeed);
-        rb.AddForce(-transform.up * 15f);
+        rb.velocity = new Vector2(xSpeed, ySpeed);
+        
     }
 
     public void SetupSpeed(float x, float y)

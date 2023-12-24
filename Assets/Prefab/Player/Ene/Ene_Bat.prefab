@@ -298,6 +298,6 @@ MonoBehaviour:
   - {fileID: 0}
   checkRadius: 6
   defaultSpeed: 0
-  enemyRenderer: {fileID: 0}
+  enemyRenderer: {fileID: 8603278183491355377}
   waitTimeAfterDetection: 3
   detectionTimeCounter: 0
