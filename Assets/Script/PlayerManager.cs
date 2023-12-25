@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
-    [SerializeField] private Transform respawnPoint;
+    public Transform respawnPoint;
     [SerializeField] private GameObject playerprefab;
     public GameObject currentPlayer;
 
     private void Awake()
     {
         instance = this;
-        PlayerRespawn();
+        
     }
 
-    private void PlayerRespawn()
+    public void PlayerRespawn()
     {
         if (currentPlayer == null)
         {
