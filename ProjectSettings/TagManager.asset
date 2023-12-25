@@ -15,10 +15,10 @@ TagManager:
   - Ground
   - Enemy
   - Player
+  - Other
+  - CameraZone
   - Bullet_Horizontal
   - Buleet_Vertical
-  - CameraZone
-  - 
   - 
   - 
   - 

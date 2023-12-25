@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1020885745527271560}
   - component: {fileID: 7252081422042285643}
   - component: {fileID: 7377745156649064923}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Ene_Bullet_Trunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

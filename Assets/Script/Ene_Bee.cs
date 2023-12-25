@@ -30,8 +30,6 @@ public class Ene_Bee : Enemy
 
     void Update()
     {
-        if (player == null)
-            return;
         bool idle = idleTimeCounter > 0;
 
         anim.SetBool("idle", idle);
@@ -40,6 +38,8 @@ public class Ene_Bee : Enemy
         if (idle)
             return;
 
+        if (player == null)
+            return;
 
         playerDetected = Physics2D.OverlapCircle(playerCheck.position, checkRadius, whatIsPlayer);
 

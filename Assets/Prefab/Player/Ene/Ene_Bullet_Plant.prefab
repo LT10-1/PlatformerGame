@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7252081422042285643}
   - component: {fileID: 8765325268444681632}
   - component: {fileID: 7377745156649064923}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Ene_Bullet_Plant
   m_TagString: Untagged
   m_Icon: {fileID: 0}

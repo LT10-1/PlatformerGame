@@ -15,6 +15,14 @@ public class PlayerManager : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            PlayerRespawn();
+        }
+    }
+
     public void PlayerRespawn()
     {
         if (currentPlayer == null)
@@ -24,8 +32,5 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 104991914087710010}
   - component: {fileID: 8653701755625656504}
   - component: {fileID: 7590576269885527893}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Ene_Bullet_Bee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
