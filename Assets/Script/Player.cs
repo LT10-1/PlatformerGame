@@ -246,8 +246,10 @@ public class Player : MonoBehaviour
         if (yInput && jumpCount > 0) // Jump function call and jumpcount - 1, if Button Press (yInput) and jumpCount > 0
         {
             Jump();
-            jumpCount -= 1;
+           
         }
+        
+
     }
 
     private void InputCheck()
@@ -271,29 +273,27 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (!isGrounded)
-        {
-            bufferJumpCounter = bufferJumpTime;
-        }
-
         if (isWallSliding)
         {
             WallJumping();
+            jumpCount -= 1; // Decrease jumpCount here after wall jump.
         }
         else if (isGrounded && yInput)
         {
             JumpButton();
+          
         }
         else if (!isGrounded && yInput && jumpCount > 0)
         {
             JumpButton();
+            jumpCount -= 1; // And here
         }
-
     }
 
     private void JumpButton()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        jumpCount -= 1; // Decrease jumpCount here after a successful jump.
     }
 
     private void FlipController()

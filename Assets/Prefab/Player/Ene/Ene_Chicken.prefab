@@ -151,7 +151,7 @@ MonoBehaviour:
   FlipTimeCounter: 0
   whatisGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   groundCheckDistance: 0.33
   wallCheckDistance: 0.77
   groundCheck: {fileID: 2130542043723134648}
