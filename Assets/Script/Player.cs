@@ -30,9 +30,9 @@ public class Player : MonoBehaviour
     private bool isWallJump;
 
     [Header("Check Collision")]
-/*
-    [SerializeField] private Vector2 groundCheckSize;*/
+
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsWall;
 
     [SerializeField] private Transform enemyCheckRollAttack;
 
@@ -330,7 +330,7 @@ public class Player : MonoBehaviour
 
 
         //Wall check box
-        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
+        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDir, wallCheckDistance, whatIsWall);
 
         if (isWallDetected)
         {

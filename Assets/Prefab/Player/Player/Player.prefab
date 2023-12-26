@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7871135821130865090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.08, z: 0}
+  m_LocalPosition: {x: 0.38, y: -1.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7871135822692891863}
   - component: {fileID: 7871135822692891880}
   - component: {fileID: 7871135822692891861}
-  - component: {fileID: 5254211900380718206}
+  - component: {fileID: 4695396969435070805}
   - component: {fileID: 7871135822692891882}
   - component: {fileID: 2103901177}
   - component: {fileID: 2103901178}
@@ -228,8 +228,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &5254211900380718206
-CapsuleCollider2D:
+--- !u!61 &4695396969435070805
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -241,9 +241,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.053534508, y: -0.25482345}
-  m_Size: {x: 0.86507225, y: 1.4903531}
-  m_Direction: 0
+  m_Offset: {x: -0.025696278, y: -0.35760927}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.8436594, y: 1.2847815}
+  m_EdgeRadius: 0
 --- !u!114 &7871135822692891882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,16 +268,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 15
-  bufferJumpTime: 1
+  bufferJumpTime: 0
   bufferJumpCounter: 0
   wallSlidingSpeed: 0.5
-  wallJumpDirection: {x: 20, y: 12}
+  wallJumpDirection: {x: 5, y: 12}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 8264
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 64
   enemyCheckRollAttack: {fileID: 603488006}
   enemyCheckRadiusRollAttack: 1
-  wallCheckDistance: 1.01
+  wallCheckDistance: 0.51
   groundCheckDistance: 0.37
   wallCheck: {fileID: 7871135821783560031}
   groundCheck: {fileID: 7871135821130865089}
