@@ -5,6 +5,9 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
 
+    public int fruit;
+    private bool isDead = false;
+
     [Header("Move Basic")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
@@ -81,14 +84,19 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
         HitTimeCounter -= Time.deltaTime;
         RollTimeCounter -= Time.deltaTime;
         bufferJumpCounter -= Time.deltaTime;
         RollTimeAttackCounter -= Time.deltaTime;
 
 
-        CollisionChecks();
         AnimController();
+        if (isDead)
+        {
+            return;
+        }
+        CollisionChecks();
         PlayerRolling();
         if (playerisHit)
             return;
@@ -193,12 +201,30 @@ public class Player : MonoBehaviour
             HitTimeCounter = CooldownTimePlayerHit;
             rb.velocity = new Vector2(HitDirection.x * -facingDir, HitDirection.y);
             Invoke("CancelPlayerHit", HitTime);
-
+            fruit--;
             GetComponent<CameraShake>().ScreenShake(-facingDir);
+            if (fruit < 0)
+            {
+                canMove = false;
+                rb.velocity = new Vector2 (0,0);
+
+                Invoke("playdeath", 1f);
+
+
+                if (isDead)
+                {
+                    rb.velocity = new Vector2(0, 0);
+                    Destroy(gameObject);
+
+                }
+
+            }
         }
 
 
     }
+
+    private void playdeath() => isDead = true;
 
     public void CancelPlayerHit() => playerisHit = false;
 
@@ -246,9 +272,9 @@ public class Player : MonoBehaviour
         if (yInput && jumpCount > 0) // Jump function call and jumpcount - 1, if Button Press (yInput) and jumpCount > 0
         {
             Jump();
-           
+
         }
-        
+
 
     }
 
@@ -270,7 +296,7 @@ public class Player : MonoBehaviour
 
         }
     }
-    
+
 
     private void Jump()
     {
@@ -282,7 +308,7 @@ public class Player : MonoBehaviour
         else if (isGrounded && yInput)
         {
             JumpButton();
-          
+
         }
         else if (!isGrounded && yInput && jumpCount > 0)
         {
@@ -291,7 +317,7 @@ public class Player : MonoBehaviour
         }
     }
 
-   
+
 
     private void JumpButton()
     {
@@ -321,7 +347,7 @@ public class Player : MonoBehaviour
     }
     private void AnimController()
     {
-
+        anim.SetBool("isDead", isDead);
         anim.SetFloat("xInput", rb.velocity.x);
 
         anim.SetFloat("yInput", rb.velocity.y);
