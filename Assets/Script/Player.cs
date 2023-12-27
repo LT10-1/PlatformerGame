@@ -270,6 +270,7 @@ public class Player : MonoBehaviour
 
         }
     }
+    
 
     private void Jump()
     {
@@ -290,10 +291,17 @@ public class Player : MonoBehaviour
         }
     }
 
+   
+
     private void JumpButton()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         jumpCount -= 1; // Decrease jumpCount here after a successful jump.
+    }
+
+    public void Push(float pushForce)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, pushForce);
     }
 
     private void FlipController()
